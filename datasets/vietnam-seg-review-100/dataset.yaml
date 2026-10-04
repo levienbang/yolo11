@@ -1,0 +1,7 @@
+names:
+- car
+- truck
+- bus
+- motorcycle
+nc: 4
+val: images

@@ -72,8 +72,9 @@ Cài thư viện nếu cần: `pip install -r requirements.txt`.
 
 ## Repo GitHub
 
-Commit đầu tiên chỉ gồm code và hướng dẫn. Weight, video, dataset và kết quả
-đánh giá vẫn giữ ở máy local, chưa đưa lên repo.
+Repo gồm code, hướng dẫn và bộ 100 ảnh test kèm nhãn tại
+`datasets/vietnam-seg-review-100/`. Weight, video và kết quả chạy giữ ở máy local,
+không được đưa lên repo. Dataset nguồn đầy đủ cũng chỉ giữ local.
 
 Nano dùng weight pretrained chính thức; có thể tải bằng:
 
@@ -81,5 +82,5 @@ Nano dùng weight pretrained chính thức; có thể tải bằng:
 python -c "from ultralytics import YOLO; YOLO('weights/yolo-nano/yolo11n-seg.pt')"
 ```
 
-Để chạy large hoặc đánh giá 100 ảnh, đặt weight và dataset vào các đường dẫn
-được mô tả phía trên.
+Bộ 100 ảnh test đã có sẵn sau khi clone; không cần giải nén.
+Để chạy large, đặt `bestseg.pt` vào đường dẫn weight được mô tả phía trên.

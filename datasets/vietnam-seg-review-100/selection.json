@@ -1,0 +1,23 @@
+{
+  "images": 100,
+  "difficulty": {
+    "easy": 70,
+    "medium": 20,
+    "hard": 10
+  },
+  "source_splits": {
+    "train": 74,
+    "valid": 20,
+    "test": 6
+  },
+  "class_instances": {
+    "car": 188,
+    "truck": 101,
+    "motorcycle": 225,
+    "bus": 26
+  },
+  "source": "/Users/levienbang/Desktop/DACS/yolo11/Vietnam Traffic Vehicle Detectio.v1i.yolov11",
+  "source_url": "https://universe.roboflow.com/phan-ky-dat/vietnam-traffic-vehicle-detectio/dataset/1",
+  "selection": "70 visually reviewed little-occlusion easy; remaining 30 reviewer discretion; no model predictions used",
+  "leakage": "Exact duplicates excluded within source. Friend fine-tuning dataset unavailable: train/eval leakage unverified."
+}

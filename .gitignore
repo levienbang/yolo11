@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 *.pt
 *.mp4
-datasets/
+datasets/*
+!datasets/vietnam-seg-review-100/
 outputs/
 /Vietnam Traffic Vehicle Detectio.v1i.yolov11/
