@@ -1,0 +1,8 @@
+__pycache__/
+.DS_Store
+.venv/
+*.pt
+*.mp4
+datasets/
+outputs/
+/Vietnam Traffic Vehicle Detectio.v1i.yolov11/
