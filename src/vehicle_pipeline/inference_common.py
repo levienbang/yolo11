@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from time import perf_counter
 
+from .device import resolve_device
 from .hull_common import compute_hull, extract_vector_features
 from .iou_tracker import IoUTracker
 
@@ -20,8 +21,8 @@ def parse_args(default_algorithm, default_model=None, default_output=None):
     p.add_argument('--model', type=Path, default=default_model or ROOT / 'weights' / 'yolo-nano' / 'yolo11n-seg.pt',
                    help='Segmentation checkpoint; default YOLO11n-seg pretrained COCO.')
     p.add_argument('--algorithm', choices=['quickhull', 'ograham', 'both'], default=default_algorithm)
-    p.add_argument('--output-dir', type=Path, default=default_output or ROOT / 'outputs' / 'vh1-nano-coco')
-    p.add_argument('--device', default='cpu')
+    p.add_argument('--output-dir', type=Path, default=default_output or ROOT / 'outputs' / 'vh1-nano')
+    p.add_argument('--device', default='auto', help='auto, cpu, mps or a CUDA index')
     p.add_argument('--conf', type=float, default=0.05)
     p.add_argument('--imgsz', type=int, default=960)
     p.add_argument('--max-det', type=int, default=300)
@@ -47,6 +48,7 @@ def run(args):
     if not args.model.is_file() or not args.input.is_file():
         raise FileNotFoundError(f'Check model/video paths: {args.model}, {args.input}')
     requested_device = args.device
+    args.device = resolve_device(args.device)
     try:
         select_device(args.device, verbose=False)
     except (ValueError, RuntimeError, AssertionError) as error:

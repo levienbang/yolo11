@@ -1,0 +1,30 @@
+[
+ {
+  "class": "car",
+  "mask": "masks/7d128593-0ccfea4c/car_1.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/7d128593-0ccfea4c/car_2.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/7d128593-0ccfea4c/car_3.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/7d128593-0ccfea4c/truck_4.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/7d128593-0ccfea4c/truck_5.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/7d128593-0ccfea4c/truck_6.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/7d128593-0ccfea4c/truck_7.png"
+ }
+]

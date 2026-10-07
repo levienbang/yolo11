@@ -1,0 +1,133 @@
+{
+  "metrics": [
+    {
+      "model": "YOLO11n-seg COCO",
+      "method": "quickhull",
+      "images": 100,
+      "gt": 540,
+      "tp": 304,
+      "fp": 175,
+      "fn": 236,
+      "precision": 0.6346555323590815,
+      "recall": 0.562962962962963,
+      "f1": 0.5966633954857703,
+      "mean_matched_iou": 0.808031297239818,
+      "map50": 0.615106785088628,
+      "map50_95": 0.3812936199255609,
+      "mean_matched_dice": 0.8888773938329534,
+      "mean_hull_ms": 0.54348164309975
+    },
+    {
+      "model": "YOLO11n-seg COCO",
+      "method": "ograham",
+      "images": 100,
+      "gt": 540,
+      "tp": 304,
+      "fp": 175,
+      "fn": 236,
+      "precision": 0.6346555323590815,
+      "recall": 0.562962962962963,
+      "f1": 0.5966633954857703,
+      "mean_matched_iou": 0.808031297239818,
+      "map50": 0.615106785088628,
+      "map50_95": 0.3812936199255609,
+      "mean_matched_dice": 0.8888773938329534,
+      "mean_hull_ms": 0.3249430130328205
+    },
+    {
+      "model": "YOLO11 large bestseg",
+      "method": "quickhull",
+      "images": 100,
+      "gt": 540,
+      "tp": 372,
+      "fp": 145,
+      "fn": 168,
+      "precision": 0.7195357833655706,
+      "recall": 0.6888888888888889,
+      "f1": 0.7038789025543993,
+      "mean_matched_iou": 0.8220034403506146,
+      "map50": 0.7086732097294632,
+      "map50_95": 0.4744241157683753,
+      "mean_matched_dice": 0.8981638950500384,
+      "mean_hull_ms": 0.5851965612075265
+    },
+    {
+      "model": "YOLO11 large bestseg",
+      "method": "ograham",
+      "images": 100,
+      "gt": 540,
+      "tp": 372,
+      "fp": 145,
+      "fn": 168,
+      "precision": 0.7195357833655706,
+      "recall": 0.6888888888888889,
+      "f1": 0.7038789025543993,
+      "mean_matched_iou": 0.8220034403506146,
+      "map50": 0.7086732097294632,
+      "map50_95": 0.4744241157683753,
+      "mean_matched_dice": 0.8981638950500384,
+      "mean_hull_ms": 0.3442177528738831
+    }
+  ],
+  "error_breakdown": [
+    {
+      "model": "YOLO11n-seg COCO",
+      "method": "yolo_mask",
+      "unmatched_gt": 199,
+      "wrong_class": 37,
+      "unmatched_prediction": 138
+    },
+    {
+      "model": "YOLO11n-seg COCO",
+      "method": "quickhull",
+      "unmatched_gt": 208,
+      "wrong_class": 36,
+      "unmatched_prediction": 147
+    },
+    {
+      "model": "YOLO11n-seg COCO",
+      "method": "ograham",
+      "unmatched_gt": 208,
+      "wrong_class": 36,
+      "unmatched_prediction": 147
+    },
+    {
+      "model": "YOLO11 large bestseg",
+      "method": "yolo_mask",
+      "unmatched_gt": 131,
+      "wrong_class": 31,
+      "unmatched_prediction": 108
+    },
+    {
+      "model": "YOLO11 large bestseg",
+      "method": "quickhull",
+      "unmatched_gt": 145,
+      "wrong_class": 31,
+      "unmatched_prediction": 122
+    },
+    {
+      "model": "YOLO11 large bestseg",
+      "method": "ograham",
+      "unmatched_gt": 145,
+      "wrong_class": 31,
+      "unmatched_prediction": 122
+    }
+  ],
+  "verification": {
+    "YOLO11n-seg COCO": {
+      "records": 100,
+      "comparisons": 100,
+      "gt": 540,
+      "only_four_classes": true,
+      "model_sha256_matches": true
+    },
+    "YOLO11 large bestseg": {
+      "records": 100,
+      "comparisons": 100,
+      "gt": 540,
+      "only_four_classes": true,
+      "model_sha256_matches": true
+    }
+  },
+  "manifest_sha256": "74db0812ba055f6d14915bf878ab9e85f1f2fb95473b9025df5a1c5919928c68"
+}

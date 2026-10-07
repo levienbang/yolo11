@@ -1,0 +1,1231 @@
+{
+  "images": 100,
+  "gt_instances": 1242,
+  "model": "/Users/levienbang/Desktop/DACS/yolo11/weights/yolo-large/bestseg.pt",
+  "model_sha256": "cabe90049795dfc9a370b7934d6dec7f6b9e44a20e573b0ff81b7e205512c872",
+  "dataset": "/Users/levienbang/Desktop/DACS/yolo11/datasets/bdd100k-seg-100",
+  "manifest_sha256": "ad961e4e4aaadea0f87ee6d8de8675c7985762cb367e6b7911675c235ca5726a",
+  "settings": {
+    "conf": 0.2,
+    "conf_floor": 0.001,
+    "imgsz": 960,
+    "device": "mps",
+    "nms_iou": 0.7,
+    "max_det": 300,
+    "retina_masks": true,
+    "tracker": null
+  },
+  "metric_protocol": "Confidence-ordered class-aware one-to-one matching. 101-point interpolated AP, IoU .50:.05:.95, area all, max_det 300. Not official COCOeval.",
+  "validation": {
+    "images": 100,
+    "source_splits": {
+      "val": 100
+    },
+    "class_instances": {
+      "car": 1151,
+      "truck": 63,
+      "bus": 23,
+      "motorcycle": 5
+    }
+  },
+  "model_training_data": "/ultralytics/ultralytics/cfg/datasets/coco.yaml",
+  "confusion": {
+    "box_detection": {
+      "per_class": {
+        "car": {
+          "tp": 710,
+          "fp": 180,
+          "fn": 441,
+          "gt": 1151,
+          "precision": 0.797752808988764,
+          "recall": 0.6168549087749783,
+          "f1": 0.6957373836354728
+        },
+        "truck": {
+          "tp": 30,
+          "fp": 49,
+          "fn": 33,
+          "gt": 63,
+          "precision": 0.379746835443038,
+          "recall": 0.47619047619047616,
+          "f1": 0.4225352112676056
+        },
+        "bus": {
+          "tp": 12,
+          "fp": 14,
+          "fn": 11,
+          "gt": 23,
+          "precision": 0.46153846153846156,
+          "recall": 0.5217391304347826,
+          "f1": 0.4897959183673469
+        },
+        "motorcycle": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 3,
+          "gt": 5,
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.5714285714285715
+        }
+      },
+      "confusion_matrix": [
+        [
+          710,
+          26,
+          6,
+          0,
+          409
+        ],
+        [
+          9,
+          30,
+          1,
+          0,
+          23
+        ],
+        [
+          1,
+          2,
+          12,
+          0,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          3
+        ],
+        [
+          170,
+          21,
+          7,
+          0,
+          0
+        ]
+      ],
+      "confusion": {
+        "car_to_truck": {
+          "count": 26,
+          "gt_count": 1151,
+          "localized_gt_count": 742,
+          "rate_all_gt": 0.022589052997393572,
+          "rate_localized_gt": 0.03504043126684636
+        },
+        "truck_to_car": {
+          "count": 9,
+          "gt_count": 63,
+          "localized_gt_count": 40,
+          "rate_all_gt": 0.14285714285714285,
+          "rate_localized_gt": 0.225
+        }
+      },
+      "matched_classification_accuracy": 0.9436795994993742,
+      "matched_objects": 799
+    },
+    "yolo_mask": {
+      "per_class": {
+        "car": {
+          "tp": 683,
+          "fp": 207,
+          "fn": 468,
+          "gt": 1151,
+          "precision": 0.7674157303370787,
+          "recall": 0.5933970460469157,
+          "f1": 0.669279764821166
+        },
+        "truck": {
+          "tp": 30,
+          "fp": 49,
+          "fn": 33,
+          "gt": 63,
+          "precision": 0.379746835443038,
+          "recall": 0.47619047619047616,
+          "f1": 0.4225352112676056
+        },
+        "bus": {
+          "tp": 12,
+          "fp": 14,
+          "fn": 11,
+          "gt": 23,
+          "precision": 0.46153846153846156,
+          "recall": 0.5217391304347826,
+          "f1": 0.4897959183673469
+        },
+        "motorcycle": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 4,
+          "gt": 5,
+          "precision": 0.5,
+          "recall": 0.2,
+          "f1": 0.28571428571428575
+        }
+      },
+      "confusion_matrix": [
+        [
+          683,
+          26,
+          6,
+          0,
+          436
+        ],
+        [
+          10,
+          30,
+          1,
+          0,
+          22
+        ],
+        [
+          1,
+          2,
+          12,
+          0,
+          8
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          4
+        ],
+        [
+          196,
+          21,
+          7,
+          1,
+          0
+        ]
+      ],
+      "confusion": {
+        "car_to_truck": {
+          "count": 26,
+          "gt_count": 1151,
+          "localized_gt_count": 715,
+          "rate_all_gt": 0.022589052997393572,
+          "rate_localized_gt": 0.03636363636363636
+        },
+        "truck_to_car": {
+          "count": 10,
+          "gt_count": 63,
+          "localized_gt_count": 41,
+          "rate_all_gt": 0.15873015873015872,
+          "rate_localized_gt": 0.24390243902439024
+        }
+      },
+      "matched_classification_accuracy": 0.9404145077720207,
+      "matched_objects": 772
+    },
+    "quickhull": {
+      "per_class": {
+        "car": {
+          "tp": 679,
+          "fp": 211,
+          "fn": 472,
+          "gt": 1151,
+          "precision": 0.7629213483146068,
+          "recall": 0.5899218071242398,
+          "f1": 0.6653601175894169
+        },
+        "truck": {
+          "tp": 30,
+          "fp": 49,
+          "fn": 33,
+          "gt": 63,
+          "precision": 0.379746835443038,
+          "recall": 0.47619047619047616,
+          "f1": 0.4225352112676056
+        },
+        "bus": {
+          "tp": 12,
+          "fp": 14,
+          "fn": 11,
+          "gt": 23,
+          "precision": 0.46153846153846156,
+          "recall": 0.5217391304347826,
+          "f1": 0.4897959183673469
+        },
+        "motorcycle": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 4,
+          "gt": 5,
+          "precision": 0.5,
+          "recall": 0.2,
+          "f1": 0.28571428571428575
+        }
+      },
+      "confusion_matrix": [
+        [
+          679,
+          26,
+          6,
+          0,
+          440
+        ],
+        [
+          10,
+          30,
+          1,
+          0,
+          22
+        ],
+        [
+          0,
+          2,
+          12,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          4
+        ],
+        [
+          201,
+          21,
+          7,
+          1,
+          0
+        ]
+      ],
+      "confusion": {
+        "car_to_truck": {
+          "count": 26,
+          "gt_count": 1151,
+          "localized_gt_count": 711,
+          "rate_all_gt": 0.022589052997393572,
+          "rate_localized_gt": 0.03656821378340366
+        },
+        "truck_to_car": {
+          "count": 10,
+          "gt_count": 63,
+          "localized_gt_count": 41,
+          "rate_all_gt": 0.15873015873015872,
+          "rate_localized_gt": 0.24390243902439024
+        }
+      },
+      "matched_classification_accuracy": 0.9413298565840938,
+      "matched_objects": 767
+    },
+    "ograham": {
+      "per_class": {
+        "car": {
+          "tp": 679,
+          "fp": 211,
+          "fn": 472,
+          "gt": 1151,
+          "precision": 0.7629213483146068,
+          "recall": 0.5899218071242398,
+          "f1": 0.6653601175894169
+        },
+        "truck": {
+          "tp": 30,
+          "fp": 49,
+          "fn": 33,
+          "gt": 63,
+          "precision": 0.379746835443038,
+          "recall": 0.47619047619047616,
+          "f1": 0.4225352112676056
+        },
+        "bus": {
+          "tp": 12,
+          "fp": 14,
+          "fn": 11,
+          "gt": 23,
+          "precision": 0.46153846153846156,
+          "recall": 0.5217391304347826,
+          "f1": 0.4897959183673469
+        },
+        "motorcycle": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 4,
+          "gt": 5,
+          "precision": 0.5,
+          "recall": 0.2,
+          "f1": 0.28571428571428575
+        }
+      },
+      "confusion_matrix": [
+        [
+          679,
+          26,
+          6,
+          0,
+          440
+        ],
+        [
+          10,
+          30,
+          1,
+          0,
+          22
+        ],
+        [
+          0,
+          2,
+          12,
+          0,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          4
+        ],
+        [
+          201,
+          21,
+          7,
+          1,
+          0
+        ]
+      ],
+      "confusion": {
+        "car_to_truck": {
+          "count": 26,
+          "gt_count": 1151,
+          "localized_gt_count": 711,
+          "rate_all_gt": 0.022589052997393572,
+          "rate_localized_gt": 0.03656821378340366
+        },
+        "truck_to_car": {
+          "count": 10,
+          "gt_count": 63,
+          "localized_gt_count": 41,
+          "rate_all_gt": 0.15873015873015872,
+          "rate_localized_gt": 0.24390243902439024
+        }
+      },
+      "matched_classification_accuracy": 0.9413298565840938,
+      "matched_objects": 767
+    }
+  },
+  "overall": {
+    "box_detection": {
+      "images": 100,
+      "gt": 1242,
+      "tp": 759,
+      "fp": 238,
+      "fn": 483,
+      "precision": 0.7612838515546639,
+      "recall": 0.6111111111111112,
+      "f1": 0.6779812416257258,
+      "mean_matched_iou": 0.8632472195958274,
+      "map50": 0.4762047073829212,
+      "map50_95": 0.3452425451021246,
+      "mean_matched_dice": 0.9222485348643366
+    },
+    "bbox_region": {
+      "images": 100,
+      "gt": 1242,
+      "tp": 638,
+      "fp": 359,
+      "fn": 604,
+      "precision": 0.6399197592778335,
+      "recall": 0.5136876006441223,
+      "f1": 0.5698972755694507,
+      "mean_matched_iou": 0.7000049686170297,
+      "map50": 0.3605019017715598,
+      "map50_95": 0.1529294574450068,
+      "mean_matched_dice": 0.8203179544572571
+    },
+    "convex": {
+      "images": 100,
+      "gt": 1242,
+      "tp": 711,
+      "fp": 286,
+      "fn": 531,
+      "precision": 0.7131394182547643,
+      "recall": 0.572463768115942,
+      "f1": 0.6351049575703439,
+      "mean_matched_iou": 0.7809237061505915,
+      "map50": 0.40723582108665285,
+      "map50_95": 0.24735181590864155,
+      "mean_matched_dice": 0.8726132016276831
+    },
+    "yolo_mask": {
+      "images": 100,
+      "gt": 1242,
+      "tp": 731,
+      "fp": 266,
+      "fn": 511,
+      "precision": 0.7331995987963892,
+      "recall": 0.5885668276972624,
+      "f1": 0.6529700759267529,
+      "mean_matched_iou": 0.8001271231066838,
+      "map50": 0.41385505684683016,
+      "map50_95": 0.28088466042484933,
+      "mean_matched_dice": 0.884068876839346
+    },
+    "quickhull": {
+      "images": 100,
+      "gt": 1242,
+      "tp": 727,
+      "fp": 270,
+      "fn": 515,
+      "precision": 0.7291875626880642,
+      "recall": 0.5853462157809984,
+      "f1": 0.6493970522554713,
+      "mean_matched_iou": 0.7896751585984001,
+      "map50": 0.41281590022889664,
+      "map50_95": 0.27662714602398,
+      "mean_matched_dice": 0.8780839275375328
+    },
+    "ograham": {
+      "images": 100,
+      "gt": 1242,
+      "tp": 727,
+      "fp": 270,
+      "fn": 515,
+      "precision": 0.7291875626880642,
+      "recall": 0.5853462157809984,
+      "f1": 0.6493970522554713,
+      "mean_matched_iou": 0.7896751585984001,
+      "map50": 0.41281590022889664,
+      "map50_95": 0.27662714602398,
+      "mean_matched_dice": 0.8780839275375328
+    }
+  },
+  "by_class": [
+    {
+      "method": "box_detection",
+      "class": "car",
+      "images": 100,
+      "gt": 1151,
+      "tp": 714,
+      "fp": 176,
+      "fn": 437,
+      "precision": 0.802247191011236,
+      "recall": 0.6203301476976543,
+      "f1": 0.699657030867222,
+      "mean_matched_iou": 0.8622740155675498,
+      "map50": 0.69131270325184,
+      "map50_95": 0.49235475334380185
+    },
+    {
+      "method": "box_detection",
+      "class": "truck",
+      "images": 100,
+      "gt": 63,
+      "tp": 31,
+      "fp": 48,
+      "fn": 32,
+      "precision": 0.3924050632911392,
+      "recall": 0.49206349206349204,
+      "f1": 0.43661971830985913,
+      "mean_matched_iou": 0.8789333528087985,
+      "map50": 0.33428304133514947,
+      "map50_95": 0.26421326150883584
+    },
+    {
+      "method": "box_detection",
+      "class": "bus",
+      "images": 100,
+      "gt": 23,
+      "tp": 12,
+      "fp": 14,
+      "fn": 11,
+      "precision": 0.46153846153846156,
+      "recall": 0.5217391304347826,
+      "f1": 0.4897959183673469,
+      "mean_matched_iou": 0.8997229983409246,
+      "map50": 0.4732824908852894,
+      "map50_95": 0.39766949228853404
+    },
+    {
+      "method": "box_detection",
+      "class": "motorcycle",
+      "images": 100,
+      "gt": 5,
+      "tp": 2,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714285714285715,
+      "mean_matched_iou": 0.7486913204193115,
+      "map50": 0.40594059405940597,
+      "map50_95": 0.22673267326732677
+    },
+    {
+      "method": "bbox_region",
+      "class": "car",
+      "images": 100,
+      "gt": 1151,
+      "tp": 599,
+      "fp": 291,
+      "fn": 552,
+      "precision": 0.6730337078651686,
+      "recall": 0.5204170286707211,
+      "f1": 0.5869671729544341,
+      "mean_matched_iou": 0.6994489182613927,
+      "map50": 0.5316024580039116,
+      "map50_95": 0.20853941008532567
+    },
+    {
+      "method": "bbox_region",
+      "class": "truck",
+      "images": 100,
+      "gt": 63,
+      "tp": 27,
+      "fp": 52,
+      "fn": 36,
+      "precision": 0.34177215189873417,
+      "recall": 0.42857142857142855,
+      "f1": 0.38028169014084506,
+      "mean_matched_iou": 0.7010630170504252,
+      "map50": 0.29256679068809766,
+      "map50_95": 0.11003869635506085
+    },
+    {
+      "method": "bbox_region",
+      "class": "bus",
+      "images": 100,
+      "gt": 23,
+      "tp": 11,
+      "fp": 15,
+      "fn": 12,
+      "precision": 0.4230769230769231,
+      "recall": 0.4782608695652174,
+      "f1": 0.44897959183673475,
+      "mean_matched_iou": 0.7190383943644437,
+      "map50": 0.40991756631502185,
+      "map50_95": 0.1683872480921159
+    },
+    {
+      "method": "bbox_region",
+      "class": "motorcycle",
+      "images": 100,
+      "gt": 5,
+      "tp": 1,
+      "fp": 1,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.2,
+      "f1": 0.28571428571428575,
+      "mean_matched_iou": 0.7951441407203674,
+      "map50": 0.2079207920792079,
+      "map50_95": 0.12475247524752475
+    },
+    {
+      "method": "convex",
+      "class": "car",
+      "images": 100,
+      "gt": 1151,
+      "tp": 667,
+      "fp": 223,
+      "fn": 484,
+      "precision": 0.749438202247191,
+      "recall": 0.579496090356212,
+      "f1": 0.6536011758941694,
+      "mean_matched_iou": 0.7800086388166162,
+      "map50": 0.6226347465601993,
+      "map50_95": 0.3476519442889557
+    },
+    {
+      "method": "convex",
+      "class": "truck",
+      "images": 100,
+      "gt": 63,
+      "tp": 31,
+      "fp": 48,
+      "fn": 32,
+      "precision": 0.3924050632911392,
+      "recall": 0.49206349206349204,
+      "f1": 0.43661971830985913,
+      "mean_matched_iou": 0.7835362169050402,
+      "map50": 0.32510525482191466,
+      "map50_95": 0.19792865731829032
+    },
+    {
+      "method": "convex",
+      "class": "bus",
+      "images": 100,
+      "gt": 23,
+      "tp": 12,
+      "fp": 14,
+      "fn": 11,
+      "precision": 0.46153846153846156,
+      "recall": 0.5217391304347826,
+      "f1": 0.4897959183673469,
+      "mean_matched_iou": 0.8195115129152933,
+      "map50": 0.4732824908852894,
+      "map50_95": 0.2982821075718748
+    },
+    {
+      "method": "convex",
+      "class": "motorcycle",
+      "images": 100,
+      "gt": 5,
+      "tp": 1,
+      "fp": 1,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.2,
+      "f1": 0.28571428571428575,
+      "mean_matched_iou": 0.8472321033477783,
+      "map50": 0.2079207920792079,
+      "map50_95": 0.14554455445544554
+    },
+    {
+      "method": "yolo_mask",
+      "class": "car",
+      "images": 100,
+      "gt": 1151,
+      "tp": 687,
+      "fp": 203,
+      "fn": 464,
+      "precision": 0.7719101123595505,
+      "recall": 0.5968722849695917,
+      "f1": 0.6731994120529152,
+      "mean_matched_iou": 0.7976752228958985,
+      "map50": 0.6474055438362555,
+      "map50_95": 0.3865753318250323
+    },
+    {
+      "method": "yolo_mask",
+      "class": "truck",
+      "images": 100,
+      "gt": 63,
+      "tp": 31,
+      "fp": 48,
+      "fn": 32,
+      "precision": 0.3924050632911392,
+      "recall": 0.49206349206349204,
+      "f1": 0.43661971830985913,
+      "mean_matched_iou": 0.8292534293666962,
+      "map50": 0.3268114005865679,
+      "map50_95": 0.2359906948368809
+    },
+    {
+      "method": "yolo_mask",
+      "class": "bus",
+      "images": 100,
+      "gt": 23,
+      "tp": 12,
+      "fp": 14,
+      "fn": 11,
+      "precision": 0.46153846153846156,
+      "recall": 0.5217391304347826,
+      "f1": 0.4897959183673469,
+      "mean_matched_iou": 0.8617728551228842,
+      "map50": 0.4732824908852894,
+      "map50_95": 0.3554280605820387
+    },
+    {
+      "method": "yolo_mask",
+      "class": "motorcycle",
+      "images": 100,
+      "gt": 5,
+      "tp": 1,
+      "fp": 1,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.2,
+      "f1": 0.28571428571428575,
+      "mean_matched_iou": 0.8419182896614075,
+      "map50": 0.2079207920792079,
+      "map50_95": 0.14554455445544554
+    },
+    {
+      "method": "quickhull",
+      "class": "car",
+      "images": 100,
+      "gt": 1151,
+      "tp": 683,
+      "fp": 207,
+      "fn": 468,
+      "precision": 0.7674157303370787,
+      "recall": 0.5933970460469157,
+      "f1": 0.669279764821166,
+      "mean_matched_iou": 0.786943813543194,
+      "map50": 0.6449550631291746,
+      "map50_95": 0.3699759719939051
+    },
+    {
+      "method": "quickhull",
+      "class": "truck",
+      "images": 100,
+      "gt": 63,
+      "tp": 31,
+      "fp": 48,
+      "fn": 32,
+      "precision": 0.3924050632911392,
+      "recall": 0.49206349206349204,
+      "f1": 0.43661971830985913,
+      "mean_matched_iou": 0.8190399850568464,
+      "map50": 0.32510525482191466,
+      "map50_95": 0.22842584050202674
+    },
+    {
+      "method": "quickhull",
+      "class": "bus",
+      "images": 100,
+      "gt": 23,
+      "tp": 12,
+      "fp": 14,
+      "fn": 11,
+      "precision": 0.46153846153846156,
+      "recall": 0.5217391304347826,
+      "f1": 0.4897959183673469,
+      "mean_matched_iou": 0.864624947309494,
+      "map50": 0.4732824908852894,
+      "map50_95": 0.36256221714454256
+    },
+    {
+      "method": "quickhull",
+      "class": "motorcycle",
+      "images": 100,
+      "gt": 5,
+      "tp": 1,
+      "fp": 1,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.2,
+      "f1": 0.28571428571428575,
+      "mean_matched_iou": 0.8454767465591431,
+      "map50": 0.2079207920792079,
+      "map50_95": 0.14554455445544554
+    },
+    {
+      "method": "ograham",
+      "class": "car",
+      "images": 100,
+      "gt": 1151,
+      "tp": 683,
+      "fp": 207,
+      "fn": 468,
+      "precision": 0.7674157303370787,
+      "recall": 0.5933970460469157,
+      "f1": 0.669279764821166,
+      "mean_matched_iou": 0.786943813543194,
+      "map50": 0.6449550631291746,
+      "map50_95": 0.3699759719939051
+    },
+    {
+      "method": "ograham",
+      "class": "truck",
+      "images": 100,
+      "gt": 63,
+      "tp": 31,
+      "fp": 48,
+      "fn": 32,
+      "precision": 0.3924050632911392,
+      "recall": 0.49206349206349204,
+      "f1": 0.43661971830985913,
+      "mean_matched_iou": 0.8190399850568464,
+      "map50": 0.32510525482191466,
+      "map50_95": 0.22842584050202674
+    },
+    {
+      "method": "ograham",
+      "class": "bus",
+      "images": 100,
+      "gt": 23,
+      "tp": 12,
+      "fp": 14,
+      "fn": 11,
+      "precision": 0.46153846153846156,
+      "recall": 0.5217391304347826,
+      "f1": 0.4897959183673469,
+      "mean_matched_iou": 0.864624947309494,
+      "map50": 0.4732824908852894,
+      "map50_95": 0.36256221714454256
+    },
+    {
+      "method": "ograham",
+      "class": "motorcycle",
+      "images": 100,
+      "gt": 5,
+      "tp": 1,
+      "fp": 1,
+      "fn": 4,
+      "precision": 0.5,
+      "recall": 0.2,
+      "f1": 0.28571428571428575,
+      "mean_matched_iou": 0.8454767465591431,
+      "map50": 0.2079207920792079,
+      "map50_95": 0.14554455445544554
+    }
+  ],
+  "by_difficulty": [
+    {
+      "method": "box_detection",
+      "difficulty": "easy",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "box_detection",
+      "difficulty": "medium",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "box_detection",
+      "difficulty": "hard",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "bbox_region",
+      "difficulty": "easy",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "bbox_region",
+      "difficulty": "medium",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "bbox_region",
+      "difficulty": "hard",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "convex",
+      "difficulty": "easy",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "convex",
+      "difficulty": "medium",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "convex",
+      "difficulty": "hard",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "yolo_mask",
+      "difficulty": "easy",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "yolo_mask",
+      "difficulty": "medium",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "yolo_mask",
+      "difficulty": "hard",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "quickhull",
+      "difficulty": "easy",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "quickhull",
+      "difficulty": "medium",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "quickhull",
+      "difficulty": "hard",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "ograham",
+      "difficulty": "easy",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "ograham",
+      "difficulty": "medium",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    },
+    {
+      "method": "ograham",
+      "difficulty": "hard",
+      "images": 0,
+      "gt": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mean_matched_iou": null,
+      "map50": null,
+      "map50_95": null
+    }
+  ],
+  "confidence_curve": [
+    {
+      "conf": 0.05,
+      "images": 100,
+      "gt": 1242,
+      "tp": 816,
+      "fp": 752,
+      "fn": 426,
+      "precision": 0.5204081632653061,
+      "recall": 0.6570048309178744,
+      "f1": 0.5807829181494663,
+      "mean_matched_iou": 0.7851377514501413
+    },
+    {
+      "conf": 0.1,
+      "images": 100,
+      "gt": 1242,
+      "tp": 784,
+      "fp": 464,
+      "fn": 458,
+      "precision": 0.6282051282051282,
+      "recall": 0.6312399355877617,
+      "f1": 0.629718875502008,
+      "mean_matched_iou": 0.7901546861596254
+    },
+    {
+      "conf": 0.2,
+      "images": 100,
+      "gt": 1242,
+      "tp": 731,
+      "fp": 266,
+      "fn": 511,
+      "precision": 0.7331995987963892,
+      "recall": 0.5885668276972624,
+      "f1": 0.6529700759267529,
+      "mean_matched_iou": 0.8001271231066838
+    },
+    {
+      "conf": 0.3,
+      "images": 100,
+      "gt": 1242,
+      "tp": 691,
+      "fp": 176,
+      "fn": 551,
+      "precision": 0.7970011534025375,
+      "recall": 0.5563607085346216,
+      "f1": 0.6552868658131817,
+      "mean_matched_iou": 0.8076434795314772
+    },
+    {
+      "conf": 0.5,
+      "images": 100,
+      "gt": 1242,
+      "tp": 604,
+      "fp": 85,
+      "fn": 638,
+      "precision": 0.8766328011611031,
+      "recall": 0.4863123993558776,
+      "f1": 0.6255825996892802,
+      "mean_matched_iou": 0.8230763570165003
+    },
+    {
+      "conf": 0.7,
+      "images": 100,
+      "gt": 1242,
+      "tp": 457,
+      "fp": 26,
+      "fn": 785,
+      "precision": 0.9461697722567288,
+      "recall": 0.3679549114331723,
+      "f1": 0.5298550724637682,
+      "mean_matched_iou": 0.8495288382995572
+    }
+  ],
+  "hull_fidelity": {
+    "quickhull": {
+      "calls": 997,
+      "mean_ms": 0.8494576613008678,
+      "mean_iou_with_yolo": 0.9674121364858105,
+      "added_pixel_ratio": 0.042925910443070814,
+      "removed_pixel_ratio": 0.0038446156467434652
+    },
+    "ograham": {
+      "calls": 997,
+      "mean_ms": 0.3698458277980947,
+      "mean_iou_with_yolo": 0.9674121364858105,
+      "added_pixel_ratio": 0.042925910443070814,
+      "removed_pixel_ratio": 0.0038446156467434652
+    }
+  },
+  "yolo_stage_mean_ms": {
+    "preprocess": 2.5967062189010903,
+    "inference": 645.0510012794985,
+    "postprocess": 165.06954165932257
+  },
+  "images_at_max_det": 0,
+  "wall_seconds": 137.951116250013
+}

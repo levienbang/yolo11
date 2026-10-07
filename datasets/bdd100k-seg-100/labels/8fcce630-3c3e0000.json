@@ -1,0 +1,38 @@
+[
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_3.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_4.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_5.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_6.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_7.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_8.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_9.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_10.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/8fcce630-3c3e0000/car_11.png"
+ }
+]

@@ -1,0 +1,58 @@
+[
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_1.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_2.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_3.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_4.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_5.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_6.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_7.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_8.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_9.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_12.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_13.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_14.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_15.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/9e9342d8-f17b592a/car_16.png"
+ }
+]

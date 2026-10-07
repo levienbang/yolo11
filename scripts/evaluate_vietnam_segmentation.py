@@ -13,11 +13,12 @@ import numpy as np
 from ultralytics import YOLO
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
+from vehicle_pipeline.device import resolve_device
 from vehicle_pipeline.hull_common import compute_hull
 from vehicle_pipeline.vehicle_benchmark import CLASSES, confusion, summarize_confusion
 from prepare_vietnam_segmentation import load_polygons, validate
 from evaluation_metrics import region, region_iou, box_iou, matching, summarize, write_csv, full_mask, matrix_image
-METHODS=['box_detection','bbox_region','yolo_mask','quickhull','ograham']
+METHODS=['box_detection','bbox_region','convex','yolo_mask','quickhull','ograham']
 
 
 def load_gt(path, shape):
@@ -64,7 +65,7 @@ def report_markdown(path, summary, example_paths):
            f"Ảnh: {summary['images']}; nhãn xe: {summary['gt_instances']}. Chọn 70 dễ (ít che khuất), 20 trung bình, 10 khó bằng xem ảnh.",
            'Không dùng số lượng xe để định nghĩa dễ. Tất cả GT xe là polygon; loại toàn bộ ảnh có nhãn xe chỉ là box.',
            '',f"Model: `{summary['model']}`.",f"Metadata training dataset: `{summary['model_training_data']}`.",
-           'Đây là checkpoint đang dùng trong pipeline local. Metadata COCO không chứng minh đây là bản fine-tune Việt Nam của người bạn; cần checkpoint đó để đánh giá riêng.',
+           'Mô hình dùng trực tiếp, không fine-tune trên dữ liệu Việt Nam; chỉ giữ 4 lớp phương tiện khi suy luận.',
            'Không retrain. Đánh giá ảnh trước tracking: chưa đánh giá ID, đếm xe hoặc tốc độ Jetson.',
            '', '## Kết quả', '',
            '| Đầu ra | Precision | Recall | F1 | mAP50 | mAP50–95 | IoU TP | Dice TP |',
@@ -89,7 +90,7 @@ def report_markdown(path, summary, example_paths):
         lines.append(f"| {method} | {m['mean_ms']:.3f} | {m['mean_iou_with_yolo']:.1%} | {m['added_pixel_ratio']:.1%} | {m['removed_pixel_ratio']:.1%} |")
     lines += ['', '## Giới hạn và file', '',
               'Bộ chọn có chủ đích, không đại diện ngẫu nhiên cho giao thông Việt Nam. Dễ là nhận xét trực quan tương đối.',
-              'Split nguồn và số lớp xem selection.json. Có thể dùng ảnh source train; chưa có dữ liệu fine-tune của người bạn để chứng minh không leakage.',
+              'Split nguồn và số lớp xem selection.json. Mô hình không được huấn luyện trên bộ nguồn nên ảnh thuộc split train không gây rò rỉ dữ liệu.',
               'Không tự đổi nhãn car/truck của nguồn, không suy đoán pickup/van. Bỏ bicycle ngoài phạm vi.',
               'Ảnh cùng video có tương quan dù không trùng pixel; không coi đây là 100 cảnh độc lập.',
               'AP bị giới hạn bởi confidence floor, NMS và max_det. Một số mask có thể thiếu/không sát vật thể ngay trong nguồn.',
@@ -107,12 +108,13 @@ def main(default_model=None, default_output=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset', type=Path, default=ROOT/'datasets/vietnam-seg-review-100')
     parser.add_argument('--model', type=Path, default=default_model or ROOT/'weights/yolo-nano/yolo11n-seg.pt')
-    parser.add_argument('--output-dir', type=Path, default=default_output or ROOT/'outputs/evaluation/vietnam-seg-review-100-nano')
-    parser.add_argument('--device', default='cpu')
+    parser.add_argument('--output-dir', type=Path, default=default_output or ROOT/'outputs/evaluation/vietnam-seg-100-nano')
+    parser.add_argument('--device', default='auto', help='auto, cpu, mps or a CUDA index')
     parser.add_argument('--imgsz', type=int, default=960)
     parser.add_argument('--conf', type=float, default=0.20)
     parser.add_argument('--conf-floor', type=float, default=0.001)
     args = parser.parse_args()
+    args.device = resolve_device(args.device)
     if not 0 < args.conf_floor <= args.conf <= 1:
         parser.error('Require 0 < conf-floor <= conf <= 1')
     if args.output_dir.exists():
@@ -173,6 +175,11 @@ def main(default_model=None, default_output=None):
             y1, y2 = np.clip([y1, y2], 0, shape[0])
             rectangle = np.ones((max(0, y2-y1), max(0, x2-x1)), dtype=bool)
             regions = {'yolo_mask': region(mask), 'bbox_region': (x1, y1, rectangle, int(rectangle.sum()))}
+            filled = np.zeros(shape, np.uint8)
+            if len(points):
+                hull = cv2.convexHull(np.asarray(points, np.int32))
+                cv2.fillPoly(filled, [hull], 1)
+            regions['convex'] = region(filled)
             # Alternate order across objects to avoid always timing one algorithm first.
             order = ['quickhull','ograham'] if (number+index)%2 else ['ograham','quickhull']
             for method in order:

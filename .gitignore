@@ -5,5 +5,6 @@ __pycache__/
 *.mp4
 datasets/*
 !datasets/vietnam-seg-review-100/
+!datasets/bdd100k-seg-100/
 outputs/
 /Vietnam Traffic Vehicle Detectio.v1i.yolov11/

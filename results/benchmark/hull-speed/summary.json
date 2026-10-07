@@ -1,0 +1,38 @@
+{
+  "settings": {
+    "dataset": "/Users/levienbang/Desktop/DACS/yolo11/datasets/vietnam-seg-review-100",
+    "output_dir": "/Users/levienbang/Desktop/DACS/yolo11/outputs/benchmark/hull-speed",
+    "sizes": [
+      100,
+      500,
+      1000,
+      2000,
+      5000,
+      10000
+    ],
+    "warmup": 3,
+    "repeats": 30,
+    "seed": 0
+  },
+  "real_contours": {
+    "quickhull": {
+      "objects": 540,
+      "contour_points_median": 165,
+      "contour_points_max": 1768,
+      "median_ms": 0.6477500137407333,
+      "mean_ms": 1.5086994562470526,
+      "p95_ms": 6.345806588069533,
+      "total_ms": 814.6977063734084
+    },
+    "ograham": {
+      "objects": 540,
+      "contour_points_median": 165,
+      "contour_points_max": 1768,
+      "median_ms": 0.45777051127515733,
+      "mean_ms": 0.6583928943318488,
+      "p95_ms": 1.984483332489617,
+      "total_ms": 355.5321629391983
+    },
+    "ograham_faster_ratio_median": 1.4215786850140275
+  }
+}

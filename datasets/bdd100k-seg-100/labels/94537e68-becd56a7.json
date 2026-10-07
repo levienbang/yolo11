@@ -1,0 +1,62 @@
+[
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_1.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_2.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_4.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_5.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_6.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_7.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_8.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_9.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_10.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_11.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_12.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_13.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/94537e68-becd56a7/car_14.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/94537e68-becd56a7/truck_3.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/94537e68-becd56a7/truck_15.png"
+ }
+]

@@ -1,0 +1,50 @@
+[
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_4.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_5.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_6.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_7.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_9.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_10.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_14.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_15.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_16.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_17.png"
+ },
+ {
+  "class": "car",
+  "mask": "masks/a91b7555-00000045/car_19.png"
+ },
+ {
+  "class": "motorcycle",
+  "mask": "masks/a91b7555-00000045/motorcycle_18.png"
+ }
+]

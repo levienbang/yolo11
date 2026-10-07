@@ -1,7 +1,12 @@
 """Identical normalization and geometry features for both hull algorithms."""
+import sys
 import numpy as np
 from .quickhull import findOrthogonalConvexHull
 from .OGraham import o_graham
+
+# The recursive QuickHull goes one level deeper per staircase vertex; large
+# masks with many hull vertices would exceed Python's default limit of 1000.
+sys.setrecursionlimit(max(sys.getrecursionlimit(), 100000))
 
 
 def normalize_hull(points):

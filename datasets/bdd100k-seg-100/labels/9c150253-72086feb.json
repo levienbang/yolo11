@@ -1,0 +1,14 @@
+[
+ {
+  "class": "car",
+  "mask": "masks/9c150253-72086feb/car_2.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/9c150253-72086feb/truck_1.png"
+ },
+ {
+  "class": "truck",
+  "mask": "masks/9c150253-72086feb/truck_3.png"
+ }
+]
