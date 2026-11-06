@@ -8,3 +8,4 @@ datasets/*
 !datasets/bdd100k-seg-100/
 outputs/
 /Vietnam Traffic Vehicle Detectio.v1i.yolov11/
+!datasets/pickup_relabel.csv

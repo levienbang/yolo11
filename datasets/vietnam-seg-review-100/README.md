@@ -10,6 +10,7 @@ Thông tin xuất dataset gốc được giữ trong README.dataset.txt và READ
 Thay đổi từ nguồn: chọn 100 ảnh bằng kiểm tra trực quan, chỉ giữ ảnh có nhãn xe
 polygon hợp lệ, bỏ bicycle và đổi ID lớp về thứ tự phía trên. Không vẽ mask từ box.
 Ảnh và tọa độ polygon xe được giữ như nguồn.
+Quy ước của đồ án: xe bán tải là `truck`; 9 nhãn bán tải được đổi từ `car`, danh sách ở `../pickup_relabel.csv`.
 
 - images/: 100 ảnh đã chọn.
 - labels/: 100 file nhãn polygon tương ứng.
