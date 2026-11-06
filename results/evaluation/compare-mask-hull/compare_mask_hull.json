@@ -1,0 +1,154 @@
+{
+  "vietnam-large": {
+    "predictions": 517,
+    "contour_points_median": 74.0,
+    "hull_vertices_median": 51.0,
+    "vertex_ratio_median": 0.8051948051948052,
+    "masks_with_fragments": 100,
+    "masks_with_holes": 36,
+    "pairs": 387,
+    "mean_iou": {
+      "rect": 0.623147912184104,
+      "mask": 0.8446260788927176,
+      "convex": 0.779935456768021,
+      "hull": 0.8060929013197775
+    },
+    "hull_at_least_mask": 68,
+    "by_class": {
+      "car": {
+        "pairs": 144,
+        "mask": 0.8822029250071437,
+        "hull": 0.8537032272891671
+      },
+      "truck": {
+        "pairs": 75,
+        "mask": 0.895970221037334,
+        "hull": 0.866724545487908
+      },
+      "bus": {
+        "pairs": 21,
+        "mask": 0.9129929298066684,
+        "hull": 0.8697070660210103
+      },
+      "motorcycle": {
+        "pairs": 147,
+        "mask": 0.7718534233109723,
+        "hull": 0.719431964510745
+      }
+    }
+  },
+  "vietnam-nano": {
+    "predictions": 479,
+    "contour_points_median": 78.0,
+    "hull_vertices_median": 50.0,
+    "vertex_ratio_median": 0.7692307692307693,
+    "masks_with_fragments": 101,
+    "masks_with_holes": 44,
+    "pairs": 312,
+    "mean_iou": {
+      "rect": 0.635833171534089,
+      "mask": 0.8282134359187867,
+      "convex": 0.7735254954113038,
+      "hull": 0.7973644612099813
+    },
+    "hull_at_least_mask": 55,
+    "by_class": {
+      "car": {
+        "pairs": 133,
+        "mask": 0.859471734994835,
+        "hull": 0.8385257896700954
+      },
+      "truck": {
+        "pairs": 66,
+        "mask": 0.8620675504789805,
+        "hull": 0.8351555979320908
+      },
+      "bus": {
+        "pairs": 20,
+        "mask": 0.8840929474291439,
+        "hull": 0.8292360765716713
+      },
+      "motorcycle": {
+        "pairs": 93,
+        "mask": 0.7474681072274495,
+        "hull": 0.7048257083488181
+      }
+    }
+  },
+  "bdd100k-large": {
+    "predictions": 997,
+    "contour_points_median": 48.0,
+    "hull_vertices_median": 43.0,
+    "vertex_ratio_median": 0.9392265193370166,
+    "masks_with_fragments": 49,
+    "masks_with_holes": 11,
+    "pairs": 732,
+    "mean_iou": {
+      "rect": 0.6607916761125139,
+      "mask": 0.8004017289615962,
+      "convex": 0.7709707831472832,
+      "hull": 0.7875514389753577
+    },
+    "hull_at_least_mask": 212,
+    "by_class": {
+      "car": {
+        "pairs": 683,
+        "mask": 0.7972651918190229,
+        "hull": 0.7843076010402149
+      },
+      "truck": {
+        "pairs": 36,
+        "mask": 0.838298528900493,
+        "hull": 0.8217940477175593
+      },
+      "bus": {
+        "pairs": 12,
+        "mask": 0.8617728543524162,
+        "hull": 0.8646249440872281
+      },
+      "motorcycle": {
+        "pairs": 1,
+        "mask": 0.8419182948490231,
+        "hull": 0.845476772616137
+      }
+    }
+  },
+  "bdd100k-nano": {
+    "predictions": 935,
+    "contour_points_median": 52.0,
+    "hull_vertices_median": 44.0,
+    "vertex_ratio_median": 0.9130434782608695,
+    "masks_with_fragments": 66,
+    "masks_with_holes": 28,
+    "pairs": 614,
+    "mean_iou": {
+      "rect": 0.6655873310016007,
+      "mask": 0.7897354852276289,
+      "convex": 0.7659688321224389,
+      "hull": 0.7780145010246303
+    },
+    "hull_at_least_mask": 170,
+    "by_class": {
+      "car": {
+        "pairs": 586,
+        "mask": 0.7881120844748845,
+        "hull": 0.7761865015132765
+      },
+      "truck": {
+        "pairs": 19,
+        "mask": 0.8243420520664883,
+        "hull": 0.8096918998588442
+      },
+      "bus": {
+        "pairs": 9,
+        "mask": 0.8223786042465114,
+        "hull": 0.8301630716694387
+      },
+      "motorcycle": {
+        "pairs": 0,
+        "mask": null,
+        "hull": null
+      }
+    }
+  }
+}

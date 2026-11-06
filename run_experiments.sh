@@ -27,6 +27,10 @@ echo "== 4/5 Đánh giá 100 ảnh BDD100K"
 $PY scripts/evaluate_bdd100k_segmentation.py --model $NANO  --device "$DEVICE" --output-dir "$OUT/evaluation/bdd100k-seg-100-nano"
 $PY scripts/evaluate_bdd100k_segmentation.py --model $LARGE --device "$DEVICE" --output-dir "$OUT/evaluation/bdd100k-seg-100-large"
 
+echo "== So sánh mặt nạ với bao trên cùng tập xe, hình của báo cáo"
+$PY scripts/compare_mask_hull.py --evaluation-dir "$OUT/evaluation" --device "$DEVICE" --output-dir "$OUT/evaluation/compare-mask-hull"
+$PY scripts/make_report_figures.py --evaluation-dir "$OUT/evaluation" --speed-csv "$OUT/benchmark/hull-speed/synthetic.csv" --output-dir "$OUT/figures"
+
 echo "== 5/5 Video demo (YOLO11l-seg + theo vết)"
 if [ -f videos/vh1.mp4 ]; then
   $PY run_yolo11l_seg.py --device "$DEVICE" --output-dir "$OUT/vh1-large"

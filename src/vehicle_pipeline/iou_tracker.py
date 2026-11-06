@@ -1,14 +1,13 @@
-"""Detector-independent IoU tracker for desktop and TensorRT/Jetson.
+"""Detector-independent IoU tracker with motion prediction.
 
 Input: [(xyxy_box, class_id, confidence), ...]. NumPy is the only dependency.
-Adds motion prediction, global one-to-one assignment, and two confidence passes
-to the IoU tracker in jetson_yolo_code/trt_video_track.py.
+Uses global one-to-one assignment and two confidence passes.
 """
 import numpy as np
 
 
 def box_iou(a, b):
-    """Scalar helper compatible with the original Jetson tracker."""
+    """Return the intersection over union of two boxes."""
     return float(_pair_metrics(np.asarray([a]), np.asarray([b]))[0][0, 0])
 
 

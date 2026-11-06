@@ -66,7 +66,7 @@ def report_markdown(path, summary, example_paths):
            'Không dùng số lượng xe để định nghĩa dễ. Tất cả GT xe là polygon; loại toàn bộ ảnh có nhãn xe chỉ là box.',
            '',f"Model: `{summary['model']}`.",f"Metadata training dataset: `{summary['model_training_data']}`.",
            'Mô hình dùng trực tiếp, không fine-tune trên dữ liệu Việt Nam; chỉ giữ 4 lớp phương tiện khi suy luận.',
-           'Không retrain. Đánh giá ảnh trước tracking: chưa đánh giá ID, đếm xe hoặc tốc độ Jetson.',
+           'Không retrain. Đánh giá ảnh trước tracking: chưa đánh giá ID hoặc đếm xe.',
            '', '## Kết quả', '',
            '| Đầu ra | Precision | Recall | F1 | mAP50 | mAP50–95 | IoU TP | Dice TP |',
            '|---|---:|---:|---:|---:|---:|---:|---:|']
@@ -90,8 +90,8 @@ def report_markdown(path, summary, example_paths):
         lines.append(f"| {method} | {m['mean_ms']:.3f} | {m['mean_iou_with_yolo']:.1%} | {m['added_pixel_ratio']:.1%} | {m['removed_pixel_ratio']:.1%} |")
     lines += ['', '## Giới hạn và file', '',
               'Bộ chọn có chủ đích, không đại diện ngẫu nhiên cho giao thông Việt Nam. Dễ là nhận xét trực quan tương đối.',
-              'Split nguồn và số lớp xem selection.json. Mô hình không được huấn luyện trên bộ nguồn nên ảnh thuộc split train không gây rò rỉ dữ liệu.',
-              'Không tự đổi nhãn car/truck của nguồn, không suy đoán pickup/van. Bỏ bicycle ngoài phạm vi.',
+              'Split nguồn và số lớp xem selection.json. Chưa xác minh đầy đủ lịch sử huấn luyện của checkpoint nên chưa loại trừ khả năng trùng dữ liệu đã học.',
+              'Quy ước xe bán tải là truck; danh sách nhãn đã đổi so với nguồn ở datasets/pickup_relabel.csv. Bỏ bicycle ngoài phạm vi.',
               'Ảnh cùng video có tương quan dù không trùng pixel; không coi đây là 100 cảnh độc lập.',
               'AP bị giới hạn bởi confidence floor, NMS và max_det. Một số mask có thể thiếu/không sát vật thể ngay trong nguồn.',
               '`class_metrics.csv`, `difficulty_metrics.csv`, `per_image.csv`, `metrics.json`, `prediction_records.json` chứa số liệu.',

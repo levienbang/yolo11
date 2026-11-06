@@ -21,8 +21,12 @@ def normalize_hull(points):
 
 def compute_hull(points, algorithm):
     p = np.unique(np.asarray(points, dtype=np.int32).reshape(-1, 2), axis=0)
-    if len(p) < 4:
+    if len(p) < 2:
         return normalize_hull(p)
+    if len(p) < 4 and algorithm in ('quickhull', 'ograham'):
+        # Too few points for the recursive variant's guard; both methods share
+        # this branch so that every returned edge stays axis-parallel.
+        return normalize_hull(o_graham(p))
     if algorithm == 'quickhull':
         return normalize_hull(findOrthogonalConvexHull(list(map(tuple, p.tolist()))))
     if algorithm == 'ograham':

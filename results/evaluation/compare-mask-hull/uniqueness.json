@@ -1,0 +1,17 @@
+{
+  "label_masks": {
+    "objects": 540,
+    "unique_hull": 540,
+    "matches_region": 540
+  },
+  "predicted_masks_large": {
+    "objects": 517,
+    "unique_hull": 517,
+    "matches_region": 517
+  },
+  "predicted_masks_nano": {
+    "objects": 479,
+    "unique_hull": 479,
+    "matches_region": 479
+  }
+}

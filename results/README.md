@@ -1,14 +1,16 @@
 # Kết quả tham chiếu (số liệu trong báo cáo)
 
-Bản rút gọn của `outputs/` dùng trong báo cáo, để đối chiếu khi chạy lại. Không gồm ảnh đối chiếu từng ảnh
+Bản rút gọn của `outputs/` dùng trong báo cáo, để đối chiếu khi chạy lại. Bốn thư mục đánh giá dùng nhãn theo quy ước xe bán tải là `truck` (`datasets/pickup_relabel.csv`). Không gồm ảnh đối chiếu từng ảnh
 (`comparisons/`, `errors/`, `examples/`) và `prediction_records.json` — chạy lại script để sinh.
 
 | Thư mục | Lệnh tạo lại |
 |---|---|
 | `evaluation/vietnam-seg-100-nano/` | `python evaluate_yolo11n_seg.py --output-dir outputs/evaluation/<ten>` |
 | `evaluation/vietnam-seg-100-large/` | `python evaluate_yolo11l_seg.py --output-dir outputs/evaluation/<ten>` |
-| `evaluation/bdd100k-seg-100-{nano,large}/` | `python scripts/evaluate_bdd100k_segmentation.py --model weights/yolo-{nano/yolo11n,large/yolo11l}-seg.pt --output-dir outputs/evaluation/<ten>` |
-| `evaluation/vietnam-seg-100-nano-vs-large/` | So sánh tổng hợp hai lượt Việt Nam |
+| `evaluation/bdd100k-seg-100-{nano,large}/` | `python scripts/evaluate_bdd100k_segmentation.py --model weights/yolo-{nano/yolo11n,large/yolo11l}-seg.pt --output-dir outputs/evaluation/<ten>`. Báo cáo hiện không dùng |
+| `evaluation/vietnam-seg-100-nano-vs-large/` | So sánh tổng hợp hai lượt Việt Nam, **tính theo nhãn gốc** (trước quy ước bán tải là `truck`), báo cáo không dùng |
+| `evaluation/compare-mask-hull/uniqueness.json` | `python scripts/check_hull_uniqueness.py --output <tep>.json` |
+| `evaluation/compare-mask-hull/` | `python scripts/compare_mask_hull.py --evaluation-dir <thu-muc> --output-dir <thu-muc>/compare-mask-hull` |
 | `benchmark/hull-speed/` | `python scripts/benchmark_hulls.py --output-dir outputs/benchmark/<ten>` |
 | `video/vh1-large.json` | `python run_yolo11l_seg.py` (cần `videos/vh1.mp4`, không có trong repo) |
 

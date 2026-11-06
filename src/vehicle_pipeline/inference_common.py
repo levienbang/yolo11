@@ -1,4 +1,4 @@
-"""Desktop YOLO inference with independent Jetson IoU tracking for hull comparison."""
+"""Desktop YOLO inference with IoU tracking for hull comparison."""
 import argparse
 import csv
 import hashlib
@@ -230,7 +230,7 @@ def run(args):
                 'pair_mask_iou_mean': float(np.mean(pair_ious)) if pair_ious else None,
                 'pair_mask_iou_min': min(pair_ious) if pair_ious else None,
                 'model_stage_ms': model_stage_ms, 'wall_seconds': perf_counter()-started,
-                'tracker': {'type': 'jetson_iou_motion', 'iou_threshold': args.track_iou,
+                'tracker': {'type': 'iou_motion', 'iou_threshold': args.track_iou,
                             'max_age': args.track_max_age, 'high_conf': tracker.high_conf,
                             'low_conf': tracker.low_conf, 'assignment': 'hungarian_per_class',
                             'tracks_created': tracker.next_id - 1,
