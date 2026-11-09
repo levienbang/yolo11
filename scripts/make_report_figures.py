@@ -46,7 +46,7 @@ def speed(csv_path, path):
     with open(csv_path, newline='') as f:
         rows = list(csv.DictReader(f))
     fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.6), sharey=True)
-    methods = [('quickhull', 'Bản đệ quy', '#2a78d6', 'o'), ('ograham', 'O-Graham', '#eb6834', 's')]
+    methods = [('quickhull', 'QuickHull', '#2a78d6', 'o'), ('ograham', 'Graham', '#eb6834', 's')]
     for ax, (kind, title) in zip(axes, [('uniform', 'Phân bố đều'), ('circle', 'Trên đường tròn')]):
         for method, name, color, marker in methods:
             data = [r for r in rows if r['input'] == kind and r['algorithm'] == method]

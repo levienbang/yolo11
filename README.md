@@ -1,83 +1,73 @@
-# Bao lồi trực giao cho phân đoạn phương tiện với YOLO11-seg
+# Phân đoạn phương tiện bằng YOLO11-seg và bao lồi trực giao
 
-Mã nguồn đồ án cơ sở: YOLO11-seg cho mặt nạ từng xe (`car`, `truck`, `bus`, `motorcycle`), từ đường biên
-mặt nạ dựng **bao lồi trực giao liên thông** bằng hai bản cài đặt (**bản đệ quy** và **O-Graham**), theo vết bằng IoU trên video.
-Cả hai mô hình là trọng số **COCO huấn luyện sẵn của Ultralytics**, không fine-tune.
+Đồ án nhận dạng bốn lớp `car`, `truck`, `bus`, `motorcycle`, rồi dựng bao lồi trực giao từ đường biên mặt nạ. Hai bản cài đặt của nhóm được gọi là **QuickHull** và **Graham**. Video dùng ByteTrack có sẵn trong Ultralytics để gắn ID.
+
+[Báo cáo cuối — mã nguồn LaTeX](report/overleaf/main.tex) · [ZIP tải lên Overleaf](report/bao-cao.zip) · [Kết quả tham chiếu](results/README.md)
+
+## Cấu trúc
+
+| Thư mục | Nội dung |
+|---|---|
+| `src/vehicle_pipeline/` | Hai thuật toán dựng bao, xử lý hình học và chạy video |
+| `scripts/` | Chuẩn bị dữ liệu, đánh giá, đo tốc độ và tạo hình |
+| `tests/` | Kiểm thử thuật toán và phần đánh giá |
+| `datasets/vietnam-seg-review-100/` | 100 ảnh Việt Nam, 540 nhãn polygon dùng trong báo cáo |
+| `results/` | Số liệu tham chiếu và hình minh hoạ đã chọn |
+| `report/` | Báo cáo LaTeX cuối cùng và ZIP Overleaf |
+| `weights/`, `videos/`, `outputs/` | Trọng số, video và đầu ra chạy trên máy; không đưa lên Git |
+
+`QuickHull` là bản chọn cực trị bằng đệ quy của nhóm, lấy ý tưởng từ O-Quickhull; đây không phải bản cài nguyên thuật toán trong bài báo. `Graham` là bản sắp xếp rồi quét theo bốn hướng. Mã tương ứng ở `quickhull.py` và `OGraham.py`.
 
 ## Cài đặt
 
+Dùng Python 3.11, chạy các lệnh từ thư mục gốc của repo:
+
 ```bash
-conda activate ds                      # hoặc môi trường Python 3.11 bất kỳ
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-# tải hai trọng số chính thức (nếu chưa có)
+mkdir -p weights/yolo-nano weights/yolo-large
 python -c "from ultralytics import YOLO; YOLO('weights/yolo-nano/yolo11n-seg.pt'); YOLO('weights/yolo-large/yolo11l-seg.pt')"
 ```
 
-Mọi lệnh có `--device auto` (mặc định): tự chọn CUDA → Apple MPS → CPU. Có thể ép `--device cpu|mps|0`.
+Các kết quả chính dùng trọng số COCO huấn luyện sẵn. Thử nghiệm fine-tune của nhóm chưa cho cải thiện nên không dùng để tạo các bảng kết quả này.
 
-## Chạy nhanh
+## Chạy chương trình
 
 ```bash
-python run_yolo11l_seg.py               # video demo, large  -> outputs/vh1-large/
-python run_yolo11n_seg.py               # video demo, nano   -> outputs/vh1-nano/
-python evaluate_yolo11l_seg.py          # 100 ảnh Việt Nam, large -> outputs/evaluation/vietnam-seg-100-large/
-python evaluate_yolo11n_seg.py          # 100 ảnh Việt Nam, nano  -> outputs/evaluation/vietnam-seg-100-nano/
-python scripts/benchmark_hulls.py --output-dir outputs/benchmark/<ten>
-python scripts/compare_mask_hull.py --datasets vietnam --evaluation-dir <thu-muc> --output-dir <thu-muc>/compare-mask-hull
-python scripts/check_hull_uniqueness.py --output <tep>.json
+# Video do người dùng cung cấp; kết quả dùng Graham và ByteTrack
+python run_yolo11l_seg.py --input videos/traffic-night.mp4 --algorithm ograham --output-dir outputs/traffic-night-large
+
+# So sánh cả hai thuật toán trên video
+python run_yolo11l_seg.py --input videos/traffic-night.mp4 --algorithm both --output-dir outputs/traffic-night-both
+
+# Đánh giá hai mô hình trên bộ Việt Nam
+python evaluate_yolo11l_seg.py
+python evaluate_yolo11n_seg.py
+
+# Đo thời gian dựng bao
+python scripts/benchmark_hulls.py --output-dir outputs/benchmark/lan-moi
+
+# Kiểm thử
 python -m unittest discover -s tests -v
 ```
 
-Tuỳ chọn video: `--input <video>`, `--algorithm quickhull|ograham|both`, `--max-frames 10`, `--overwrite`.
-Script đánh giá **không ghi đè**: nếu thư mục kết quả đã có, truyền `--output-dir` mới.
+Video không kèm theo repo; truyền đường dẫn video của bạn bằng `--input`. Có thể dùng `--max-frames 30` để chạy thử. `--device auto` mặc định chọn CUDA, Apple MPS hoặc CPU; có thể chỉ định `--device cpu`, `mps` hoặc `0`.
 
-Tái lập số liệu (kiểm thử, benchmark, 4 lượt đánh giá gồm cả BDD100K, video) vào `outputs/<TAG>/`:
+Mỗi lượt đánh giá nên dùng thư mục mới qua `--output-dir`. Với video, chỉ dùng `--overwrite` khi muốn thay đầu ra cũ.
+
+Chạy kiểm thử, benchmark, đánh giá hai mô hình, tạo hình và video (nếu có):
 
 ```bash
-PY=python DEVICE=auto TAG=lan2 ./run_experiments.sh     # ~15 phút trên Apple M1
+TAG=ban-cuoi DEVICE=auto ./run_experiments.sh
+# Có thể chọn Python và video:
+PY=python VIDEO=/duong/dan/video.mp4 TAG=lan-moi ./run_experiments.sh
 ```
 
-## Dữ liệu
+## Dữ liệu và kết quả
 
-| Thư mục | Nội dung |
-|---|---|
-| `datasets/vietnam-seg-review-100/` | 100 ảnh giao thông Việt Nam (70 dễ / 20 trung bình / 10 khó), 540 nhãn polygon. Nguồn Roboflow, CC BY 4.0 |
-| `datasets/bdd100k-seg-100/` | 100 ảnh BDD100K val và mặt nạ từng xe, theo điều khoản của Berkeley DeepDrive (phi thương mại). **Báo cáo hiện không dùng bộ này**, chỉ giữ để tham khảo; chạy bằng `scripts/evaluate_bdd100k_segmentation.py` |
-| `Vietnam Traffic Vehicle Detectio.v1i.yolov11/` | Bộ nguồn Roboflow đầy đủ (dùng cho `scripts/prepare_vietnam_segmentation.py`) |
-| `videos/vh1.mp4` | Video demo 434 khung hình (không có trong repo) |
+Bộ Việt Nam gồm 100 ảnh với 540 phương tiện: 179 car, 110 truck, 26 bus, 225 motorcycle. Nhãn polygon, thông tin nguồn và danh sách ảnh nằm trong thư mục dữ liệu; nguồn Roboflow theo giấy phép CC BY 4.0. Tệp `datasets/pickup_relabel.csv` lưu thay đổi nhãn để tái lập đúng số liệu.
 
-## Kết quả đã chạy (số liệu trong báo cáo)
+Kết quả tham chiếu nằm ở `results/evaluation/` và `results/benchmark/`. Đây là kết quả trên ảnh dùng mô hình huấn luyện sẵn; phần video ở `results/video/` minh hoạ YOLO11-l, ByteTrack và Graham trên một đoạn video ban đêm. Các chỉ số tracking không được suy ra từ bảng đánh giá ảnh.
 
-Bản rút gọn có trong repo ở `results/` (xem `results/README.md`). Bản đầy đủ có ảnh đối chiếu nằm ở `outputs/` trên máy đã chạy:
-
-| Thư mục | Nội dung |
-|---|---|
-| `outputs/evaluation/final-2026-11-06/vietnam-seg-100-{nano,large}/` | Số liệu chính thức của báo cáo (nhãn theo quy ước bán tải là `truck`) |
-| `outputs/evaluation/final-2026-11-06/compare-mask-hull/` | So mặt nạ với bao trên cùng tập xe, độ gọn, hình cắt cận |
-| `outputs/evaluation/vietnam-seg-100-{nano,large}/` | Lượt cũ theo nhãn gốc: `metrics.json`, CSV theo lớp/độ khó/ảnh, ma trận nhầm lẫn, 100 ảnh đối chiếu |
-| `outputs/evaluation/vietnam-seg-100-nano-vs-large/` | Báo cáo so sánh nano–large |
-| `outputs/benchmark/hull-speed/` | Benchmark tốc độ: `synthetic.csv`, `summary.json`, `hull_speed.png`, `report.md` |
-| `outputs/vh1-large/` | Video đầu ra hai thuật toán + CSV đặc trưng từng xe + JSON thống kê |
-
-Mỗi `metrics.json` ghi SHA256 của trọng số đã dùng. Các lượt chạy trước ngày đổi tên ghi đường dẫn cũ
-`weights/yolo-large/bestseg.pt`; SHA256 `cabe9004…` là cùng tệp với `yolo11l-seg.pt` hiện tại.
-
-## Cấu trúc mã
-
-- `src/vehicle_pipeline/quickhull.py`: bản đệ quy chọn cực trị, lấy cảm hứng từ O-Quickhull nhưng **không** phải Algorithm 1 của bài báo.
-- `src/vehicle_pipeline/OGraham.py`: bản cài đặt O-Graham của nhóm.
-- `src/vehicle_pipeline/hull_common.py`: chuẩn hoá điểm, gọi thuật toán, diện tích/chu vi/tỉ lệ lấp đầy.
-- `src/vehicle_pipeline/iou_tracker.py`: theo vết IoU (dự đoán chuyển động, ghép Hungary theo lớp, hai ngưỡng tin cậy).
-- `src/vehicle_pipeline/inference_common.py`: vòng lặp video.
-- `scripts/evaluate_vietnam_segmentation.py`, `evaluate_bdd100k_segmentation.py`, `evaluation_metrics.py`: đánh giá
-  6 đầu ra (hộp, vùng hình chữ nhật, bao lồi thường, mặt nạ YOLO, hai bao trực giao).
-- `scripts/benchmark_hulls.py`: đo tốc độ có kiểm soát.
-- `scripts/compare_mask_hull.py`, `make_report_figures.py`: so mặt nạ với bao trên cùng tập xe, độ gọn, hình của báo cáo.
-- `scripts/check_hull_uniqueness.py`: kiểm tra bao duy nhất và trùng vùng chuẩn trên xe thật.
-- `tests/`: 9 kiểm thử (kiểm tra bao theo định nghĩa; hai bản cài đặt cho cùng biên; đọc nhãn; ma trận nhầm lẫn).
-
-## Repo GitHub
-
-Repo gồm mã, hướng dẫn, bộ đánh giá 100 ảnh Việt Nam dùng trong báo cáo, bộ BDD100K để tham khảo và kết quả tham chiếu `results/`.
-Không gồm trọng số (tải tự động bằng lệnh ở mục Cài đặt), video demo và `outputs/`.
-Sau khi clone: cài đặt → `python -m unittest discover -s tests -v` → `python evaluate_yolo11n_seg.py` → so với `results/`.
+Các phép đo thời gian phụ thuộc máy. Trọng số, video, cache và toàn bộ ảnh đầu ra được giữ cục bộ, không đẩy lên GitHub.

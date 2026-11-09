@@ -5,7 +5,19 @@ __pycache__/
 *.mp4
 datasets/*
 !datasets/vietnam-seg-review-100/
-!datasets/bdd100k-seg-100/
 outputs/
-/Vietnam Traffic Vehicle Detectio.v1i.yolov11/
 !datasets/pickup_relabel.csv
+
+# Local tooling, caches and LaTeX build products
+.serena/
+.pytest_cache/
+*.pyc
+report/overleaf/*.aux
+report/overleaf/*.log
+report/overleaf/*.out
+report/overleaf/*.toc
+report/overleaf/*.lof
+report/overleaf/*.lot
+report/overleaf/*.fls
+report/overleaf/*.fdb_latexmk
+report/overleaf/*.synctex.gz

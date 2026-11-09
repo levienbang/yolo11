@@ -1,0 +1,44 @@
+\chapter{Kết luận và hướng phát triển}
+\label{chap:conclusion}
+
+\section{Kết quả đạt được}
+
+Đồ án đã đưa bài toán tìm bao lồi trực giao liên thông vào ứng dụng phân đoạn phương tiện giao thông.
+
+\paragraph{Về lý thuyết.} Đồ án trình bày khái niệm tập lồi trực giao, bao lồi trực giao và bao lồi trực giao liên thông,
+cấu trúc bốn chuỗi bậc thang của bao và quan hệ bao hàm của bao với hình chữ nhật bao (Nhận xét~\ref{rem:inclusion}).
+Đồ án tham khảo các nghiên cứu O-Quickhull \cite{nguyen2022quickhull} và O-Graham \cite{an2021ograham}, đồng thời trình bày hai bản cài đặt thực tế của nhóm:
+bản O-Graham đạt $O(n\log n)$; bản QuickHull lấy cảm hứng từ O-Quickhull, nhanh khi bao ít đỉnh nhưng có trường hợp xấu $O(n^2\log n)$.
+
+\paragraph{Về sản phẩm.} Đồ án xây dựng được chuỗi xử lý nhận dạng và dựng bao trên ảnh và video, kèm bộ kiểm thử tự động và bộ đánh giá có thể tái lập. Trên video, hệ thống dùng ByteTrack có sẵn trong Ultralytics để gắn ID trước khi dựng và hiển thị bao.
+
+\paragraph{Về thực nghiệm.}
+\begin{itemize}
+  \item \textbf{Chọn mô hình.} So sánh sơ bộ cho thấy YOLO11-l cho mặt nạ tốt hơn YOLO11-n ở mọi chỉ số đã đo, rõ nhất ở recall xe máy (65,3\% so với 41,3\%), nên được chọn cho các thí nghiệm.
+  \item \textbf{CH1.} Với mặt nạ chuẩn, bao lồi trực giao giữ IoU trung bình 94,8\%, cao hơn bao lồi thông thường (87,9\%) và hình chữ nhật
+        (70,1\%).
+  \item \textbf{CH2.} Hai bản cài đặt cho \emph{cùng một bao} trên mọi dữ liệu thử nghiệm, nên có chất lượng như nhau.
+        Bản Graham nhanh hơn khoảng 1,4 lần theo thời gian trung vị trên đường biên xe thật và tới khoảng 40 lần ở trường hợp xấu
+        với 10\,000 điểm. Nhóm chọn bản này cho chuỗi xử lý; kết quả không phải so sánh với O-Quickhull gốc.
+  \item \textbf{CH3.} Với YOLO11-l, thay mặt nạ bằng bao làm mAP50--95 giảm từ 55,1\% xuống 47,6\% và mAP50 từ 74,6\% xuống 71,4\%,
+        nhưng vẫn cao hơn hình chữ nhật (58,3\% mAP50). Đổi lại, bao là một vùng liền khối, không lỗ, trong khi khoảng một phần năm mặt nạ bị đứt mảnh.
+        Số đỉnh của bao chỉ giảm ít so với đường biên đã rút gọn.
+\end{itemize}
+
+\section{Hạn chế}
+\begin{itemize}
+  \item Nhóm đã thử fine-tune trên dữ liệu Việt Nam nhưng kết quả chưa cải thiện. Lượng dữ liệu còn ít so với số lượng tham số của mô hình; xe máy vẫn bị bỏ sót nhiều.
+  \item Bộ đánh giá còn nhỏ (100 ảnh) và được chọn có chủ đích.
+  \item Bao lồi trực giao lấp thêm khoảng 9\% điểm ảnh so với mặt nạ YOLO, làm giảm mAP50--95.
+  \item Chưa đánh giá tốc độ toàn chuỗi xử lý sau khi tích hợp ByteTrack.
+  \item Thuật toán viết bằng Python thuần, chưa tối ưu.
+\end{itemize}
+
+\section{Hướng phát triển}
+\begin{enumerate}
+  \item \textbf{Fine-tune mô hình} YOLO11-seg trên dữ liệu giao thông Việt Nam (đặc biệt là xe máy), với tách tập
+        huấn luyện/kiểm tra theo video để ảnh từ cùng một video không xuất hiện ở cả tập huấn luyện và tập kiểm tra.
+  \item \textbf{Cài đặt hiệu năng cao}: viết lại phần dựng bao bằng C++/Numba, hoặc xử lý đồng thời bốn chuỗi bậc thang và các đối tượng khác nhau.
+  \item \textbf{Ứng dụng đặc trưng hình học} của bao (diện tích, tỉ lệ lấp đầy) để phân loại lại car/truck
+        hoặc ước lượng mức chiếm dụng mặt đường.
+\end{enumerate}

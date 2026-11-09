@@ -1,0 +1,184 @@
+% Báo cáo Đồ án cơ sở — dựa trên template https://github.com/thanhhungqb/thesis-template
+% Trên Overleaf: đặt main.tex làm Main document, compiler pdfLaTeX.
+\documentclass[10pt,a4paper,oneside]{book}
+
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{bkthesis}
+\usepackage{cs}
+\usetikzlibrary{fit,backgrounds}
+% Kiểu chung cho mọi sơ đồ khối và độ giãn dòng chung cho mọi bảng
+\tikzset{
+  blk/.style={rectangle, rounded corners=2pt, draw, align=center, text width=3.4cm,
+              minimum height=0.9cm, font=\footnotesize},
+  bb/.style={blk, fill=blue!8},
+  nk/.style={blk, fill=orange!12},
+  hd/.style={blk, fill=green!12}
+}
+\renewcommand{\arraystretch}{1.15}
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{xurl}
+\setlength{\emergencystretch}{2em}
+
+% Tên thuật toán / định lý bằng tiếng Việt
+\SetAlgorithmName{Thuật toán}{thuật toán}{Danh sách thuật toán}
+\SetKwInput{KwIn}{Đầu vào}
+\SetKwInput{KwOut}{Đầu ra}
+\newtheorem{dinhnghia}{Định nghĩa}[chapter]
+\newtheorem{dinhly}{Định lý}[chapter]
+\newtheorem{nhanxet}{Nhận xét}[chapter]
+
+\lstset{basicstyle=\ttfamily\small,breaklines=true,frame=single,columns=fullflexible,escapeinside={(*@}{@*)}}
+\graphicspath{{figs/}}
+
+\definecolor{bkblue}{RGB}{0, 91, 143}
+
+% ===== THÔNG TIN BÌA =====
+\crname{ĐỒ ÁN CƠ SỞ TRONG KHOA HỌC DỮ LIỆU}
+\title{NHẬN DẠNG CÁC LOẠI XE TRÊN ĐƯỜNG PHỐ BẰNG YOLO KẾT HỢP BAO LỒI TRỰC GIAO}
+\cstuname{SVTH: Lê Viễn Bằng (2410323)\\Nguyễn Thành Long (2411931)\\Đinh Hữu Phúc (2412701)}
+\csdeptname{KHOA KHOA HỌC ỨNG DỤNG}
+\csCouncil{Khoa Khoa học Ứng dụng}
+\csSupervise{GS. Phan Thành An\\Trần Anh Dũng\\Phong Thị Thu Huyền}
+\csReviewer{...}
+\cttime{10/2026}
+
+\thesislayout
+\setlength{\headheight}{32pt}
+
+\begin{document}
+
+% ==================== TRANG BÌA ====================
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\newgeometry{left=30mm, right=30mm, top=42mm, bottom=28mm}
+\thispagestyle{empty}
+
+\begin{center}
+    {\fontsize{10pt}{14pt}\selectfont ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH\par
+    TRƯỜNG ĐẠI HỌC BÁCH KHOA\par
+    KHOA KHOA HỌC ỨNG DỤNG\par}
+
+    \vspace{1.9cm}
+    \includegraphics[width=2.4cm]{LogoBK.jpg}
+    \vspace{1.5cm}
+
+    {\color{bkblue}\bfseries\fontsize{15pt}{19pt}\selectfont ĐỒ ÁN CƠ SỞ TRONG KHOA HỌC DỮ LIỆU\par}
+    \vspace{0.45cm}
+    \rule{\linewidth}{0.5pt}\par
+    \vspace{0.32cm}
+    {\color{bkblue}\bfseries\fontsize{20pt}{25pt}\selectfont NHẬN DẠNG CÁC LOẠI XE\par
+    TRÊN ĐƯỜNG PHỐ BẰNG YOLO\par
+    KẾT HỢP BAO LỒI TRỰC GIAO\par}
+    \vspace{0.32cm}
+    \rule{\linewidth}{0.5pt}\par
+\end{center}
+
+\vspace{2.2cm}
+\noindent\hspace*{0.37\linewidth}%
+\begin{minipage}{0.63\linewidth}
+    \fontsize{10pt}{14pt}\selectfont\color{bkblue}\bfseries
+    \begin{tabular}{@{}l@{\hspace{0.35cm}}l@{}}
+        GVHD: & GS. PHAN THÀNH AN  \\
+              & TS. PHONG THỊ THU HUYỀN \\
+              & ThS. TRẦN ANH DŨNG \\[0.28cm]
+        SV:   & Lê Viễn Bằng -- 2410323 \\
+              & Nguyễn Thành Long -- 2411931 \\
+              & Đinh Hữu Phúc -- 2412701
+    \end{tabular}
+\end{minipage}
+
+\vfill
+
+\begin{center}
+    {\fontsize{10pt}{13pt}\selectfont TP. HỒ CHÍ MINH, THÁNG 10/2026\par}
+\end{center}
+
+\restoregeometry
+\end{titlepage}
+\hypersetup{pageanchor=true}
+% Nếu muốn dùng khung bìa chuẩn bkthesis: bỏ chú thích dòng dưới
+% \coverpage
+% ======================================================================
+
+\frontmatter
+
+\begin{acknowledgments}
+Nhóm xin cảm ơn các giảng viên hướng dẫn đã góp ý cho đề tài và quá trình thực hiện báo cáo.
+\end{acknowledgments}
+
+\begin{abstract}
+Báo cáo trình bày quy trình nhận dạng và phân đoạn bốn lớp phương tiện giao thông bằng YOLO11-seg, rồi biểu diễn vùng xe bằng bao lồi trực giao dựng từ mặt nạ của YOLO. Hai mô hình YOLO11-n và YOLO11-l huấn luyện sẵn được dùng nguyên trạng trong các thí nghiệm và được so sánh sơ bộ trên 100 ảnh giao thông Việt Nam có nhãn polygon. YOLO11-l cho mặt nạ tốt hơn, rõ nhất ở xe máy, nên được chọn cho các thí nghiệm về bao.
+
+Khi dựng từ mặt nạ nhãn, bao lồi trực giao khớp với hình dạng xe tốt hơn bao lồi thông thường và hình chữ nhật bao. Khi dựng từ mặt nạ dự đoán, bao vẫn sát nhãn hơn hai cách biểu diễn này nhưng thấp hơn chính mặt nạ YOLO, vì bao được dựng từ mặt nạ và lấp thêm các phần lõm. Đổi lại, bao luôn là một vùng liền khối, không lỗ.
+
+Đồ án sử dụng hai bản cài đặt dựng bao: bản QuickHull và bản Graham. Hai bản cho cùng vùng bao trên dữ liệu đã kiểm tra, và bản Graham nhanh hơn trên đường biên xe thật. Đây là so sánh giữa hai bản cài đặt của nhóm, chưa phải so sánh với O-Quickhull gốc. Phần dùng đặc trưng bao lồi để sửa lỗi phân loại chưa được đánh giá và thuộc hướng phát triển.
+\end{abstract}
+
+\tableofcontents
+\listoftables
+\listoffigures
+{\renewcommand{\addvspace}[1]{}\listofalgorithms}
+
+\chapter*{Danh mục từ viết tắt}
+\addcontentsline{toc}{chapter}{Danh mục từ viết tắt}
+\begin{tabular}{@{}p{3cm}p{11.5cm}@{}}
+AP & Average Precision -- độ chính xác trung bình \\
+COCO & Common Objects in Context -- bộ dữ liệu ảnh tổng quát \\
+FN, FP, TP & False negative, false positive, true positive \\
+GT & Ground truth -- nhãn chuẩn \\
+IoU & Intersection over Union -- tỉ số giao trên hợp \\
+mAP & mean Average Precision -- trung bình AP theo lớp \\
+NMS & Non-Maximum Suppression -- loại các hộp dự đoán trùng nhau \\
+OCH & Orthogonal Convex Hull -- bao lồi trực giao \\
+YOLO & You Only Look Once -- họ mô hình phát hiện một giai đoạn \\
+\end{tabular}
+
+\mainmatter
+\fancypagestyle{reportbody}{%
+  \fancyhf{}%
+  \fancyhead[L]{%
+    \begin{minipage}[c]{0.85cm}\includegraphics[height=0.65cm]{LogoBK.jpg}\end{minipage}%
+    \hspace{0.2cm}%
+    \begin{minipage}[c]{8.8cm}%
+      \color{bkblue}\bfseries\fontsize{8pt}{10pt}\selectfont
+      Trường Đại học Bách Khoa TP. Hồ Chí Minh\\
+      Khoa Khoa học Ứng dụng
+    \end{minipage}}%
+  \fancyfoot[L]{\fontsize{8pt}{10pt}\selectfont
+    Đồ án cơ sở trong Khoa học dữ liệu}%
+  \fancyfoot[R]{\fontsize{8pt}{10pt}\selectfont
+    Trang \thepage/\pageref{LastPage}}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\footrulewidth}{0.4pt}%
+}
+\pagestyle{reportbody}
+\makeatletter
+\let\ps@plain\ps@reportbody
+\makeatother
+
+\input{chapters/chuong1.tex}
+\input{chapters/chuong2.tex}
+\input{chapters/chuong3.tex}
+\input{chapters/chuong4.tex}
+\input{chapters/chuong5.tex}
+
+\bibliographystyle{ieeetr}
+\bibliography{refs}
+
+\appendix
+\input{chapters/phuluc.tex}
+
+\end{document}

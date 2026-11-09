@@ -1,4 +1,4 @@
-"""Desktop YOLO inference with IoU tracking for hull comparison."""
+"""Desktop YOLO segmentation with Ultralytics ByteTrack for hull comparison."""
 import argparse
 import csv
 import hashlib
@@ -8,7 +8,6 @@ from time import perf_counter
 
 from .device import resolve_device
 from .hull_common import compute_hull, extract_vector_features
-from .iou_tracker import IoUTracker
 
 ROOT = Path(__file__).resolve().parents[2]
 COLORS = {'car': (255, 255, 0), 'motorcycle': (255, 255, 255),
@@ -17,32 +16,28 @@ COLORS = {'car': (255, 255, 0), 'motorcycle': (255, 255, 255),
 
 def parse_args(default_algorithm, default_model=None, default_output=None):
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--input', type=Path, default=ROOT / 'videos' / 'vh1.mp4')
+    p.add_argument('--input', type=Path, default=ROOT / 'videos' / 'traffic-night.mp4')
     p.add_argument('--model', type=Path, default=default_model or ROOT / 'weights' / 'yolo-nano' / 'yolo11n-seg.pt',
                    help='Segmentation checkpoint; default YOLO11n-seg pretrained COCO.')
     p.add_argument('--algorithm', choices=['quickhull', 'ograham', 'both'], default=default_algorithm)
-    p.add_argument('--output-dir', type=Path, default=default_output or ROOT / 'outputs' / 'vh1-nano')
+    p.add_argument('--output-dir', type=Path, default=default_output or ROOT / 'outputs' / 'traffic-night-nano')
     p.add_argument('--device', default='auto', help='auto, cpu, mps or a CUDA index')
     p.add_argument('--conf', type=float, default=0.05)
     p.add_argument('--imgsz', type=int, default=960)
     p.add_argument('--max-det', type=int, default=300)
-    p.add_argument('--track-iou', type=float, default=0.25)
-    p.add_argument('--track-max-age', type=int, default=30)
     p.add_argument('--max-frames', type=int, default=0)
     p.add_argument('--show', action='store_true')
     p.add_argument('--overwrite', action='store_true')
     args = p.parse_args()
     if args.max_frames < 0 or not 0 < args.conf <= 1 or args.imgsz < 32 or args.max_det < 1:
         p.error('max-frames >= 0, 0 < conf <= 1, imgsz >= 32, max-det >= 1 required')
-    if not 0 <= args.track_iou <= 1 or args.track_max_age < 0:
-        p.error('0 <= track-iou <= 1, track-max-age >= 0 required')
     return args
 
 
 def run(args):
     import cv2
     import numpy as np
-    from ultralytics import YOLO
+    from ultralytics import YOLO, __version__ as ultralytics_version
     from ultralytics.utils.torch_utils import select_device
 
     if not args.model.is_file() or not args.input.is_file():
@@ -89,8 +84,7 @@ def run(args):
     frame_count, missing_masks, objects, tracked_objects = 0, 0, 0, 0
     pair_ious = []
     model_stage_ms = {'preprocess': 0.0, 'inference': 0.0, 'postprocess': 0.0}
-    tracker = IoUTracker(iou_threshold=args.track_iou, max_age=args.track_max_age)
-    tracking_ms = 0.0
+    track_ids_seen = set()
     # Warm inference and NMS before measuring the video run.
     # This avoids counting cold MPS operator initialization as hull/inference time.
     warmup_start = perf_counter()
@@ -115,9 +109,9 @@ def run(args):
         csv_writer.writerow(['frame', 'object', 'track_id', 'class_id', 'class_name', 'confidence',
                              'algorithm', 'input_points', 'hull_ms', 'area', 'perimeter',
                              'bbox_fill_ratio', 'vertices', 'pair_mask_iou'])
-        results = model.predict(source=str(args.input), classes=classes, conf=args.conf,
+        results = model.track(source=str(args.input), classes=classes, conf=args.conf,
                               imgsz=args.imgsz, max_det=args.max_det, device=args.device,
-                              stream=True,
+                              stream=True, tracker='bytetrack.yaml',
                               verbose=False)
         for result in results:
             frame_count += 1
@@ -125,18 +119,16 @@ def run(args):
                 model_stage_ms[stage] += result.speed.get(stage, 0.0) or 0.0
             frames = {a: result.orig_img.copy() for a in algorithms}
             counts = {i: 0 for i in classes}
-            # One GPU-to-CPU transfer for all boxes, instead of per-object transfers.
+            # Ultralytics returns tracking IDs and reorders masks with their boxes.
+            # Box columns are xyxy, [track_id], confidence, class.
             box_data = result.boxes.data.cpu().numpy() if result.boxes is not None else np.empty((0, 6))
-            # Associate before drawing; each ID stays attached to its original
-            # detection index, so segmentation masks cannot be assigned by track order.
             coordinates = box_data[:, :4].astype(np.int32)
             detections = [(bbox.tolist(), int(row[-1]), float(row[-2]))
                           for bbox, row in zip(coordinates, box_data)]
-            t_track = perf_counter()
-            tracks = tracker.update(detections)
-            detection_ids = {t['detection_index']: t['id'] for t in tracks
-                             if t['detection_index'] is not None}
-            tracking_ms += (perf_counter() - t_track) * 1000
+            detection_ids = {}
+            if result.boxes is not None and result.boxes.is_track:
+                detection_ids = dict(enumerate(result.boxes.id.int().cpu().tolist()))
+            track_ids_seen.update(detection_ids.values())
             tracked_objects += len(detection_ids)
             objects += len(detections)
             polygons = {}
@@ -222,6 +214,7 @@ def run(args):
     for s in stats.values():
         s['mean_hull_ms'] = s['hull_ms'] / max(1, s['hull_calls'])
     metadata = {'model': str(args.model.resolve()),
+                'ultralytics_version': ultralytics_version,
                 'model_sha256': hashlib.sha256(args.model.read_bytes()).hexdigest(),
                 'task': model.task, 'scale': model.model.yaml.get('scale'), 'names': names,
                 'source': str(args.input.resolve()), 'frames': frame_count, 'source_frames': source_frames,
@@ -230,16 +223,12 @@ def run(args):
                 'pair_mask_iou_mean': float(np.mean(pair_ious)) if pair_ious else None,
                 'pair_mask_iou_min': min(pair_ious) if pair_ious else None,
                 'model_stage_ms': model_stage_ms, 'wall_seconds': perf_counter()-started,
-                'tracker': {'type': 'iou_motion', 'iou_threshold': args.track_iou,
-                            'max_age': args.track_max_age, 'high_conf': tracker.high_conf,
-                            'low_conf': tracker.low_conf, 'assignment': 'hungarian_per_class',
-                            'tracks_created': tracker.next_id - 1,
-                            'tracking_ms': tracking_ms,
-                            'mean_tracking_ms_per_frame': tracking_ms / frame_count},
+                'tracker': {'type': 'ultralytics_bytetrack', 'config': 'bytetrack.yaml',
+                            'unique_ids_observed': len(track_ids_seen)},
                 'warmup_seconds': warmup_seconds,
                 'settings': {'conf': args.conf, 'imgsz': args.imgsz, 'device': args.device,
                              'requested_device': requested_device, 'max_det': args.max_det},
-                'note': 'Hull timers include shared normalization, exclude drawing/CSV/raster IoU/shared YOLO/IoU tracking. Pair IoU is algorithm agreement, not ground-truth accuracy.'}
+                'note': 'Hull timers include shared normalization, exclude drawing/CSV/raster IoU/shared YOLO/ByteTrack. Detection counts refer to boxes returned by model.track, which may already be filtered by tracking. Tracker time is not measured separately. Pair IoU is algorithm agreement, not ground-truth accuracy.'}
     json_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
     print(json.dumps({k: metadata[k] for k in ('frames', 'algorithms', 'pair_mask_iou_mean', 'wall_seconds')}, indent=2), flush=True)
     print(f'Outputs: {args.output_dir.resolve()}', flush=True)

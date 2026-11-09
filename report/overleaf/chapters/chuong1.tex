@@ -1,0 +1,75 @@
+\chapter{Giới thiệu và đặt vấn đề}
+\label{chap:intro}
+
+\section{Bối cảnh}
+
+Giao thông đô thị Việt Nam có mật độ phương tiện cao và đặc biệt đông xe máy. Các bài toán như đếm lưu lượng,
+giám sát làn đường, phát hiện ùn tắc hay ước lượng diện tích mặt đường bị chiếm dụng đều cần một bước cơ bản:
+xác định chính xác \emph{vùng} mà mỗi phương tiện chiếm trong ảnh.
+
+Cách biểu diễn phổ biến nhất là hình chữ nhật bao (bounding box) do các mô hình phát hiện đối tượng như YOLO
+\cite{redmon2016yolo} trả về. Hình chữ nhật dễ tính toán nhưng chứa nhiều nền thừa, nhất là với xe máy có người
+ngồi và các xe nằm chéo trong khung hình. Ở chiều ngược lại, mô hình phân đoạn thực thể (instance segmentation)
+như YOLO11-seg \cite{yolo11} trả về mặt nạ (mask) riêng cho từng xe, đánh dấu những điểm ảnh thuộc xe đó. Mặt nạ sát vật thể nhưng biên thường răng cưa, có lỗ, có thể bị đứt thành nhiều mảnh,
+và cần nhiều điểm để mô tả.
+
+Giữa hai thái cực này, \emph{bao lồi trực giao} (orthogonal convex hull) là một biểu diễn trung gian đáng chú ý:
+là đa giác có các cạnh song song với trục toạ độ, ôm sát hình dạng vật thể hơn hình chữ nhật và bao lồi thông thường,
+nhưng vẫn gọn, liên thông và tính diện tích, chu vi rất đơn giản.
+Các thuật toán tìm bao lồi trực giao liên thông của tập điểm hữu hạn đã được nghiên cứu gần đây,
+tiêu biểu là thuật toán cải biên Graham (O-Graham) \cite{an2021ograham} và thuật toán dựa trên ý tưởng QuickHull
+\cite{nguyen2022quickhull}.
+Từ các ý tưởng này, đồ án xây dựng hai bản cài đặt để biểu diễn vùng phương tiện giao thông: bản QuickHull và bản Graham.
+
+Với mỗi xe, YOLO11-seg trả về hộp bao, nhãn lớp, độ tin cậy và mặt nạ; mặt nạ là đầu vào để trích tập điểm biên.
+Báo cáo so sánh sơ bộ YOLO11-n và YOLO11-l rồi chọn YOLO11-l cho các phép đo sau. Trước hết, chất lượng hộp và mặt nạ được đo
+trực tiếp so với nhãn chuẩn. Sau đó, bao lồi trực giao được dựng từ biên mặt nạ để khảo sát khả năng biểu diễn vùng
+và chi phí tính toán. Hai bước được báo cáo riêng để người đọc phân biệt sai số của YOLO với sai số phát sinh khi
+thay mặt nạ bằng vùng bao. Kiến trúc mô hình được mô tả ở Chương~\ref{chap:theory}.
+
+\section{Bài toán và câu hỏi nghiên cứu}
+\label{sec:questions}
+
+Cho một ảnh (hoặc một khung hình video) giao thông. Với mỗi phương tiện thuộc bốn lớp \texttt{car}, \texttt{truck},
+\texttt{bus}, \texttt{motorcycle}:
+\begin{enumerate}
+  \item phát hiện và phân đoạn phương tiện, thu được mặt nạ và tập điểm biên $P$;
+  \item dựng bao lồi trực giao liên thông của $P$ bằng hai bản cài đặt: bản QuickHull và O-Graham;
+  \item đánh giá vùng bao so với nhãn chuẩn và so với chính mặt nạ YOLO, rồi so sánh tốc độ của hai bản cài đặt;
+  \item trên video, gán định danh (ID) ổn định cho từng phương tiện qua các khung hình.
+\end{enumerate}
+
+Trọng tâm của báo cáo là so sánh mặt nạ YOLO với bao lồi trực giao, trong đó hình chữ nhật bao và bao lồi thông thường
+là các mốc tham chiếu. Đánh giá dùng bộ dữ liệu giao thông Việt Nam, với YOLO11-l được chọn sau bước so sánh sơ bộ với YOLO11-n. Báo cáo trả lời ba câu hỏi (CH):
+\begin{enumerate}
+  \item[CH1.] Bao lồi trực giao có biểu diễn hình dạng phương tiện tốt hơn hình chữ nhật và bao lồi thông thường không?
+  \item[CH2.] Hai bản cài đặt dựng bao của nhóm khác nhau thế nào về tốc độ?
+  \item[CH3.] Khi thay mặt nạ do YOLO11-seg dự đoán bằng bao lồi trực giao, chất lượng giảm bao nhiêu và đổi lại được gì?
+\end{enumerate}
+
+Trong đề tài này, YOLO11-seg nhận dạng và phân đoạn xe, còn bao lồi trực giao biểu diễn vùng xe từ mặt nạ của YOLO. Bao không sửa được lỗi phát hiện hay phân loại của mô hình.
+Báo cáo đánh giá độ sát của vùng biểu diễn: bao lồi trực giao sát nhãn hơn hình chữ nhật bao và bao lồi thông thường, nhưng thấp hơn mặt nạ YOLO.
+Việc dùng đặc trưng bao lồi để \emph{sửa lớp dự đoán sai} là bước mở rộng, chưa nằm trong các phép đo của báo cáo này.
+
+\section{Mục tiêu}
+
+Đồ án nhằm xây dựng và đánh giá một chuỗi xử lý nhận dạng, phân đoạn phương tiện bằng YOLO11-seg và biểu diễn vùng xe bằng bao lồi trực giao.
+Về lý thuyết, đồ án trình bày tập lồi trực giao, bao lồi trực giao liên thông, ý tưởng dựng bao từ các nghiên cứu O-Quickhull và O-Graham, hai bản cài đặt của nhóm, mô hình YOLO11-seg và các độ đo IoU, Precision, Recall, AP, mAP.
+Về sản phẩm, đồ án xây dựng chuỗi xử lý bằng Python chạy được trên ảnh và video, bộ kiểm thử tự động cho phần dựng bao, bộ đánh giá trên dữ liệu giao thông Việt Nam và bộ đo tốc độ có kiểm soát.
+
+\section{Phạm vi và giới hạn}
+\begin{itemize}
+  \item Chỉ xét bốn lớp phương tiện: ô tô, xe tải, xe buýt, xe máy.
+  \item So sánh sơ bộ hai mô hình YOLO11-seg huấn luyện sẵn (nano và large) rồi dùng large cho các thí nghiệm sau; chỉ giữ bốn lớp khi chạy.
+        Thông tin trong tệp trọng số ghi dữ liệu huấn luyện là COCO~\cite{lin2014coco} (bộ dữ liệu ảnh công khai gồm 80 lớp đối tượng). Các thí nghiệm trong báo cáo sử dụng mô hình huấn luyện sẵn. Nhóm đã thử fine-tune, tức huấn luyện tiếp trên dữ liệu Việt Nam, nhưng kết quả chưa cải thiện.
+  \item Chất lượng trên ảnh được đánh giá bằng các chỉ số số học, trước bước theo vết. Trên video, việc giữ cùng ID cho một xe qua nhiều khung hình chỉ được minh hoạ bằng hình ảnh, chưa được chấm bằng nhãn ID chuẩn.
+\end{itemize}
+
+\section{Bố cục báo cáo}
+\begin{itemize}
+  \item \textbf{Chương~\ref{chap:intro}} giới thiệu bối cảnh, bài toán, mục tiêu và phạm vi.
+  \item \textbf{Chương~\ref{chap:theory}} trình bày cơ sở lý thuyết: YOLO11-seg, bao lồi trực giao, hai cách dựng bao theo cài đặt của nhóm, ByteTrack để gắn ID trên video và các độ đo đánh giá.
+  \item \textbf{Chương~\ref{chap:design}} mô tả thiết kế hệ thống, hai bản cài đặt dựng bao và khác biệt so với bài báo gốc.
+  \item \textbf{Chương~\ref{chap:exp}} trình bày dữ liệu, thực nghiệm và thảo luận kết quả.
+  \item \textbf{Chương~\ref{chap:conclusion}} kết luận và đề xuất hướng phát triển.
+\end{itemize}

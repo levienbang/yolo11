@@ -20,15 +20,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
 sys.path.insert(0, str(ROOT/'src'))
 import evaluate_vietnam_segmentation as ev
-import evaluate_bdd100k_segmentation as bdd
 from evaluation_metrics import full_mask, matching, region, region_iou
 from vehicle_pipeline.device import resolve_device
 from vehicle_pipeline.hull_common import compute_hull
 from vehicle_pipeline.vehicle_benchmark import CLASSES
 
 MODELS = {'large': ROOT/'weights/yolo-large/yolo11l-seg.pt', 'nano': ROOT/'weights/yolo-nano/yolo11n-seg.pt'}
-DATASETS = {'vietnam': (ROOT/'datasets/vietnam-seg-review-100', ev.load_gt),
-            'bdd100k': (ROOT/'datasets/bdd100k-seg-100', bdd.load_gt)}
+DATASETS = {'vietnam': (ROOT/'datasets/vietnam-seg-review-100', ev.load_gt)}
 CONF = 0.20
 MIN_CROP_AREA = 1600
 COLORS = {'gt': '#2ca02c', 'rect': '#d62728', 'mask': '#7b4fb5', 'convex': '#1f77b4', 'hull': '#ff7f0e'}
@@ -181,7 +179,7 @@ def selected_scenes(per_image, dataset):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--evaluation-dir', type=Path, required=True, help='Directory with the four evaluation runs')
+    parser.add_argument('--evaluation-dir', type=Path, required=True, help='Directory with the two Vietnam evaluation runs')
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--device', default='auto')
     parser.add_argument('--datasets', nargs='+', choices=list(DATASETS), default=list(DATASETS))
@@ -243,12 +241,12 @@ def main():
                           for c in CLASSES})
             print(dataset, size, json.dumps(summary[f'{dataset}-{size}'], ensure_ascii=False), flush=True)
             if size == 'large':
-                run = args.evaluation_dir/f"{'vietnam' if dataset == 'vietnam' else 'bdd100k'}-seg-100-large"
+                run = args.evaluation_dir/'vietnam-seg-100-large'
                 for label, picked in selected_scenes(run/'per_image.csv', dataset):
                     match = next(r for r in manifest if r['filename'] == picked['filename'])
                     image = cv2.imread(str(root/match['image_path']))
                     targets, _ = load_gt(root/match['label_path'], image.shape[:2])
-                    scenes.append((('Việt Nam: ' if dataset == 'vietnam' else 'BDD100K: ')+label, image, targets,
+                    scenes.append(('Việt Nam: '+label, image, targets,
                                    predict(model, classes, names, image, device)))
                     print('scene', label, picked['filename'], picked['f1'], flush=True)
     (args.output_dir/'compare_mask_hull.json').write_text(json.dumps(summary, indent=2, ensure_ascii=False))
@@ -259,9 +257,9 @@ def main():
     worst = max(crops, key=lambda x: x['iou']['mask']-x['iou']['hull'])
     rows.append((f"{CLASSES[worst['cls']]} (giảm nhiều nhất)", worst))
     crop_figure(rows, args.output_dir/'crop_compare.png')
-    for name, group in [('scene_compare.png', scenes[:2]), ('scene_bdd.png', scenes[2:])]:
-        if group:
-            scene_figure([(f'Hàng {i}', *row[1:]) for i, row in enumerate(group, 1)], args.output_dir/name)
+    if scenes:
+        scene_figure([(f'Hàng {i}', *row[1:]) for i, row in enumerate(scenes, 1)],
+                     args.output_dir/'scene_compare.png')
     print('crops', len(crops), 'saved', args.output_dir, flush=True)
 
 

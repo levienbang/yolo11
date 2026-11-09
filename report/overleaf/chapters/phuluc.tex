@@ -1,0 +1,46 @@
+\chapter{Mã nguồn và hướng dẫn chạy}
+\label{app:run}
+
+Mã nguồn và hướng dẫn cài đặt, chạy chương trình được cung cấp tại GitHub:
+\url{https://github.com/levienbang/yolo11}.
+
+\chapter{Kết quả chi tiết}
+\label{app:results}
+
+\section{AP theo lớp của bao lồi trực giao}
+
+\begin{table}[H]
+\centering
+\caption{mAP50 / mAP50--95 theo lớp (bao lồi trực giao, YOLO11-l)}
+\begin{tabular}{lc}
+\toprule
+Lớp & mAP50 / mAP50--95 \\
+\midrule
+car        & 78,3 / 57,0 \\
+truck      & 67,7 / 49,7 \\
+bus        & 77,9 / 56,1 \\
+motorcycle & 61,7 / 27,8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Ảnh hưởng của ngưỡng độ tin cậy}
+
+\begin{table}[H]
+\centering
+\caption{Precision / Recall của mặt nạ YOLO11-l theo ngưỡng độ tin cậy}
+\begin{tabular}{rc}
+\toprule
+Ngưỡng & Precision / Recall \\
+\midrule
+0,05 & 45,0\% / 79,6\% \\
+0,10 & 59,1\% / 75,6\% \\
+0,20 & 74,9\% / 71,7\% \\
+0,30 & 82,6\% / 66,9\% \\
+0,50 & 89,2\% / 55,2\% \\
+0,70 & 94,1\% / 38,5\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ngưỡng 0,20 được chọn làm điểm cân bằng giữa Precision và Recall.

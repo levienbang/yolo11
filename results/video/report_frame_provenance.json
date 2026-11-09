@@ -1,0 +1,14 @@
+{
+  "source": "/Users/levienbang/Desktop/DACS/1792241603670_1118768801976797960_g8017937951411267787.mp4",
+  "source_frame_index_zero_based": 156,
+  "source_time_seconds": 5.193567617891115,
+  "clip_start_frame_index_zero_based": 140,
+  "clip_frames": 36,
+  "rendered_clip_frame_index_zero_based": 16,
+  "tracker": "Ultralytics ByteTrack",
+  "model": "yolo11l-seg.pt",
+  "hull": "ograham",
+  "imgsz": 960,
+  "confidence_threshold": 0.05,
+  "output_image": "/Users/levienbang/Desktop/DACS/bao-cao-overleaf-2026-11-06/figs/video_preview_night.jpg"
+}
