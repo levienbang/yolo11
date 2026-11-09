@@ -12,7 +12,7 @@
 | `scripts/` | Chuẩn bị dữ liệu, đánh giá, đo tốc độ và tạo hình |
 | `tests/` | Kiểm thử thuật toán và phần đánh giá |
 | `datasets/vietnam-seg-review-100/` | 100 ảnh Việt Nam, 540 nhãn polygon dùng trong báo cáo |
-| `results/` | Số liệu tham chiếu và hình minh hoạ đã chọn |
+| `results/` | JSON và CSV chứa số liệu đã dùng trong báo cáo |
 | `report/` | Báo cáo LaTeX cuối cùng và ZIP Overleaf |
 | `weights/`, `videos/`, `outputs/` | Trọng số, video và đầu ra chạy trên máy; không đưa lên Git |
 
@@ -68,6 +68,6 @@ PY=python VIDEO=/duong/dan/video.mp4 TAG=lan-moi ./run_experiments.sh
 
 Bộ Việt Nam gồm 100 ảnh với 540 phương tiện: 179 car, 110 truck, 26 bus, 225 motorcycle. Nhãn polygon, thông tin nguồn và danh sách ảnh nằm trong thư mục dữ liệu; nguồn Roboflow theo giấy phép CC BY 4.0. Tệp `datasets/pickup_relabel.csv` lưu thay đổi nhãn để tái lập đúng số liệu.
 
-Kết quả tham chiếu nằm ở `results/evaluation/` và `results/benchmark/`. Đây là kết quả trên ảnh dùng mô hình huấn luyện sẵn; phần video ở `results/video/` minh hoạ YOLO11-l, ByteTrack và Graham trên một đoạn video ban đêm. Các chỉ số tracking không được suy ra từ bảng đánh giá ảnh.
+Kết quả tham chiếu nằm ở `results/evaluation/` và `results/benchmark/`. Đây là kết quả trên ảnh dùng mô hình huấn luyện sẵn; hình minh hoạ video YOLO11-l, ByteTrack và Graham nằm trong `report/overleaf/figs/video_preview_night.jpg`. Các chỉ số tracking không được suy ra từ bảng đánh giá ảnh.
 
 Các phép đo thời gian phụ thuộc máy. Trọng số, video, cache và toàn bộ ảnh đầu ra được giữ cục bộ, không đẩy lên GitHub.

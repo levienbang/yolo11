@@ -16,8 +16,7 @@ Quy ước của đồ án: xe bán tải là `truck`; 9 nhãn bán tải đư�
 - labels/: 100 file nhãn polygon tương ứng.
 - manifest.csv: split nguồn, số xe, đường dẫn tương đối để đánh giá và hash ảnh.
 - dataset.yaml: tên lớp và đường dẫn val tương đối với file YAML.
-- contact_sheets/: ảnh tổng hợp đã dùng để kiểm tra trực quan.
-- reviewed.csv, review_decisions.json, selection.json: thông tin chọn ảnh.
+- selection.json: thông tin nguồn và cách chọn ảnh.
 
 Các đường dẫn original_image_path/original_label_path trong manifest là thông tin
 nguồn trên máy tạo bộ ảnh; script đánh giá dùng image_path/label_path tương đối.
