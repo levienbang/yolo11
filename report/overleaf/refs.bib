@@ -1,4 +1,5 @@
-% ---------- Bao lồi trực giao ----------
+% Chỉ giữ tài liệu thực sự được trích dẫn trong báo cáo.
+
 @article{an2021ograham,
   author  = {{Phan Thanh An} and {Phong Thi Thu Huyen} and {Nguyen Thi Le}},
   title   = {A modified {G}raham's convex hull algorithm for finding the connected orthogonal convex hull of a finite planar point set},
@@ -19,25 +20,6 @@
   doi     = {10.1016/j.amc.2022.127183}
 }
 
-@article{ottmann1984,
-  author  = {Thomas Ottmann and Eljas Soisalon-Soininen and Derick Wood},
-  title   = {On the definition and computation of rectilinear convex hulls},
-  journal = {Information Sciences},
-  volume  = {33},
-  number  = {3},
-  pages   = {157--171},
-  year    = {1984}
-}
-
-@techreport{montuno1982,
-  author      = {D. Y. Montuno and A. Fournier},
-  title       = {Finding the x-y convex hull of a set of x-y polygons},
-  institution = {University of Toronto},
-  number      = {148},
-  year        = {1982}
-}
-
-% ---------- Bao lồi thông thường ----------
 @article{graham1972,
   author  = {Ronald L. Graham},
   title   = {An efficient algorithm for determining the convex hull of a finite planar set},
@@ -69,15 +51,6 @@
   doi     = {10.1145/235815.235821}
 }
 
-@book{deberg2008,
-  author    = {Mark de Berg and Otfried Cheong and Marc van Kreveld and Mark Overmars},
-  title     = {Computational Geometry: Algorithms and Applications},
-  edition   = {3},
-  publisher = {Springer},
-  year      = {2008}
-}
-
-% ---------- Phát hiện / phân đoạn ----------
 @inproceedings{redmon2016yolo,
   author    = {Joseph Redmon and Santosh Divvala and Ross Girshick and Ali Farhadi},
   title     = {You Only Look Once: Unified, Real-Time Object Detection},
@@ -89,40 +62,23 @@
 @misc{yolo11,
   author       = {Glenn Jocher and Jing Qiu},
   title        = {Ultralytics {YOLO11}},
-  version      = {11.0.0},
   year         = {2024},
   howpublished = {\url{https://github.com/ultralytics/ultralytics}},
-  note         = {Giấy phép AGPL-3.0}
+  note         = {Thư viện sử dụng trong đồ án: Ultralytics 8.4.37; truy cập ngày 10/11/2026}
 }
 
 @misc{ultralytics_arch,
   author       = {{Ultralytics}},
-  title        = {Giải thích kiến trúc {YOLO}: từ {YOLOv3} đến {YOLO26}},
-  howpublished = {Tài liệu Ultralytics, mục Hướng dẫn: \url{https://docs.ultralytics.com/}},
-  note         = {Truy cập tháng 11/2026}
+  title        = {Reference for ultralytics/nn/modules/block.py},
+  howpublished = {\url{https://docs.ultralytics.com/reference/nn/modules/block/}},
+  note         = {Tài liệu các khối C3k2, SPPF, C2PSA và Proto; truy cập ngày 10/11/2026}
 }
 
 @misc{khanam2024yolov11,
   author       = {Rahima Khanam and Muhammad Hussain},
   title        = {{YOLOv11}: An Overview of the Key Architectural Enhancements},
   year         = {2024},
-  howpublished = {arXiv:2410.17725}
-}
-
-@inproceedings{he2017maskrcnn,
-  author    = {Kaiming He and Georgia Gkioxari and Piotr Doll{\'a}r and Ross Girshick},
-  title     = {Mask {R-CNN}},
-  booktitle = {Proceedings of the IEEE International Conference on Computer Vision (ICCV)},
-  pages     = {2961--2969},
-  year      = {2017}
-}
-
-@inproceedings{bolya2019yolact,
-  author    = {Daniel Bolya and Chong Zhou and Fanyi Xiao and Yong Jae Lee},
-  title     = {{YOLACT}: Real-time Instance Segmentation},
-  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-  pages     = {9157--9166},
-  year      = {2019}
+  howpublished = {\url{https://arxiv.org/abs/2410.17725}}
 }
 
 @inproceedings{lin2014coco,
@@ -130,35 +86,16 @@
   title     = {Microsoft {COCO}: Common Objects in Context},
   booktitle = {European Conference on Computer Vision (ECCV)},
   pages     = {740--755},
-  year      = {2014}
+  year      = {2014},
+  doi       = {10.1007/978-3-319-10602-1_48}
 }
 
 @misc{roboflowvn,
   author       = {{Phan Ky Dat}},
   title        = {Vietnam Traffic Vehicle Detection Dataset (v1)},
   year         = {2026},
-  howpublished = {Roboflow Universe, \url{https://universe.roboflow.com/phan-ky-dat/vietnam-traffic-vehicle-detectio}},
+  howpublished = {Roboflow Universe, \url{https://universe.roboflow.com/phan-ky-dat/vietnam-traffic-vehicle-detectio/dataset/1}},
   note         = {Giấy phép CC BY 4.0}
-}
-
-% ---------- Theo vết, độ đo ----------
-@inproceedings{bochinski2017iou,
-  author    = {Erik Bochinski and Volker Eiselein and Thomas Sikora},
-  title     = {High-Speed Tracking-by-Detection Without Using Image Information},
-  booktitle = {14th IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS)},
-  pages     = {1--6},
-  year      = {2017},
-  doi       = {10.1109/AVSS.2017.8078516}
-}
-
-@article{kuhn1955hungarian,
-  author  = {Harold W. Kuhn},
-  title   = {The {H}ungarian method for the assignment problem},
-  journal = {Naval Research Logistics Quarterly},
-  volume  = {2},
-  number  = {1--2},
-  pages   = {83--97},
-  year    = {1955}
 }
 
 @article{padilla2021metrics,
@@ -168,7 +105,8 @@
   volume  = {10},
   number  = {3},
   pages   = {279},
-  year    = {2021}
+  year    = {2021},
+  doi     = {10.3390/electronics10030279}
 }
 
 @article{everingham2010voc,
@@ -186,9 +124,9 @@
   title     = {{ByteTrack}: Multi-Object Tracking by Associating Every Detection Box},
   booktitle = {European Conference on Computer Vision (ECCV)},
   pages     = {1--21},
-  year      = {2022}
+  year      = {2022},
+  doi       = {10.1007/978-3-031-20047-2_1}
 }
-
 
 @article{linh2025parallel,
   author  = {{Nguyen Kieu Linh}},
@@ -201,8 +139,6 @@
   note    = {Published online 25 October 2025}
 }
 
-
-% Nguồn hình kiến trúc YOLO11-seg
 @article{wang2026lggyoloseg,
   author  = {Jionghui Wang and Yuxing Yu and Guangzheng Yao and Zeyang Qiu and Zhaojie Sun},
   title   = {{LGG-YOLO-Seg}: A Lightweight Real-Time Instance Segmentation Framework for Low-Grade Graphite Ore Sorting},

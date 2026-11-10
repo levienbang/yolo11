@@ -1,0 +1,90 @@
+{
+  "protocol": "Ground-truth masks; external pixel contours; filled polygons; turning vertices excluding closure and straight continuations; arithmetic means over vehicles, not means of class means.",
+  "summary": {
+    "car": {
+      "objects": 179,
+      "methods": {
+        "rectangle": {
+          "mean_iou": 0.7421843067822425,
+          "mean_vertices": 4.0
+        },
+        "convex": {
+          "mean_iou": 0.9161183664578354,
+          "mean_vertices": 19.307262569832403
+        },
+        "orthogonal": {
+          "mean_iou": 0.9696345508102164,
+          "mean_vertices": 109.26256983240224
+        }
+      }
+    },
+    "truck": {
+      "objects": 110,
+      "methods": {
+        "rectangle": {
+          "mean_iou": 0.7446703383045553,
+          "mean_vertices": 4.0
+        },
+        "convex": {
+          "mean_iou": 0.8941703129057937,
+          "mean_vertices": 19.48181818181818
+        },
+        "orthogonal": {
+          "mean_iou": 0.9577288235040642,
+          "mean_vertices": 119.87272727272727
+        }
+      }
+    },
+    "bus": {
+      "objects": 26,
+      "methods": {
+        "rectangle": {
+          "mean_iou": 0.7142022217538038,
+          "mean_vertices": 4.0
+        },
+        "convex": {
+          "mean_iou": 0.8752988966869114,
+          "mean_vertices": 21.153846153846153
+        },
+        "orthogonal": {
+          "mean_iou": 0.9450087949387243,
+          "mean_vertices": 136.84615384615384
+        }
+      }
+    },
+    "motorcycle": {
+      "objects": 225,
+      "methods": {
+        "rectangle": {
+          "mean_iou": 0.6457610238207523,
+          "mean_vertices": 4.0
+        },
+        "convex": {
+          "mean_iou": 0.8432459233183358,
+          "mean_vertices": 15.32
+        },
+        "orthogonal": {
+          "mean_iou": 0.9260340554708972,
+          "mean_vertices": 69.6
+        }
+      }
+    },
+    "all": {
+      "objects": 540,
+      "methods": {
+        "rectangle": {
+          "mean_iou": 0.7011670671347975,
+          "mean_vertices": 4.0
+        },
+        "convex": {
+          "mean_iou": 0.8793185668075466,
+          "mean_vertices": 17.77037037037037
+        },
+        "orthogonal": {
+          "mean_iou": 0.9478567524626565,
+          "mean_vertices": 96.22592592592592
+        }
+      }
+    }
+  }
+}

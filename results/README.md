@@ -5,6 +5,7 @@
 | `evaluation/vietnam-seg-100-large/` | Chất lượng YOLO11-l: JSON tổng hợp, CSV theo lớp, ảnh và ngưỡng độ tin cậy |
 | `evaluation/vietnam-seg-100-nano/` | Kết quả YOLO11-n dùng để chọn mô hình |
 | `evaluation/compare-mask-hull/` | Số liệu so sánh mặt nạ và vùng bao |
+| `shape/` | IoU và số đỉnh của ba loại bao trên 540 xe, gồm CSV từng xe để kiểm tra lại |
 | `benchmark/hull-speed/` | JSON tổng hợp và CSV thời gian dựng bao |
 
 Các hình đã dùng chỉ giữ một bản trong `report/overleaf/figs/`. Không giữ ảnh kết quả lặp lại hay đầu ra chạy thử cũ.

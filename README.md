@@ -45,6 +45,9 @@ python run_yolo11l_seg.py --input videos/traffic-night.mp4 --algorithm both --ou
 python evaluate_yolo11l_seg.py
 python evaluate_yolo11n_seg.py
 
+# So sánh IoU và số đỉnh của ba loại bao trên nhãn chuẩn
+python scripts/compare_shape_vertices.py
+
 # Đo thời gian dựng bao
 python scripts/benchmark_hulls.py --output-dir outputs/benchmark/lan-moi
 

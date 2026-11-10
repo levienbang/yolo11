@@ -15,7 +15,8 @@ mkdir -p "$OUT"
 echo "1/4 Kiểm thử"
 "$PY" -m unittest discover -s tests -v
 
-echo "2/4 Đo tốc độ QuickHull và Graham"
+echo "2/4 So sánh hình dạng và đo tốc độ QuickHull, Graham"
+"$PY" scripts/compare_shape_vertices.py --output-dir "$OUT/shape"
 "$PY" scripts/benchmark_hulls.py --output-dir "$OUT/benchmark/hull-speed"
 
 echo "3/4 Đánh giá 100 ảnh Việt Nam và tạo hình"

@@ -101,21 +101,29 @@ không phải chất lượng của cả chuỗi xử lý; phần đó ở Thí 
 
 \begin{table}[H]
 \centering
-\caption{IoU trung bình giữa vùng bao và mặt nạ nhãn chuẩn (bộ Việt Nam, 540 phương tiện)}
+\small
+\setlength{\tabcolsep}{5pt}
+\caption{IoU và số đỉnh trung bình của các vùng bao so với mặt nạ nhãn chuẩn (540 phương tiện)}
 \label{tab:shape}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrrrr}
 \toprule
-Lớp & Số xe & Hình chữ nhật & Bao lồi & \textbf{Bao lồi trực giao} \\
+Lớp & Số xe & \multicolumn{2}{c}{Hình chữ nhật} & \multicolumn{2}{c}{Bao lồi thường} & \multicolumn{2}{c}{Bao lồi trực giao} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+& & IoU & Số đỉnh & IoU & Số đỉnh & IoU & Số đỉnh \\
 \midrule
-car        & 179 & 74,2\% & 91,6\% & \textbf{97,0\%} \\
-truck      & 110 & 74,5\% & 89,4\% & \textbf{95,8\%} \\
-bus        &  26 & 71,4\% & 87,5\% & \textbf{94,5\%} \\
-motorcycle & 225 & 64,6\% & 84,3\% & \textbf{92,6\%} \\
+car & 179 & 74,2\% & 4 & 91,6\% & 19,3 & \textbf{97,0\%} & 109,3 \\
+truck & 110 & 74,5\% & 4 & 89,4\% & 19,5 & \textbf{95,8\%} & 119,9 \\
+bus & 26 & 71,4\% & 4 & 87,5\% & 21,2 & \textbf{94,5\%} & 136,8 \\
+motorcycle & 225 & 64,6\% & 4 & 84,3\% & 15,3 & \textbf{92,6\%} & 69,6 \\
 \midrule
-Tất cả     & 540 & 70,1\% & 87,9\% & \textbf{94,8\%} \\
+Tất cả & 540 & 70,1\% & 4 & 87,9\% & 17,8 & \textbf{94,8\%} & 96,2 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+Số đỉnh trong bảng là giá trị trung bình trên từng xe; không tính lặp đỉnh đầu để đóng kín bao và không tính các điểm nằm giữa một cạnh thẳng.
+Trên toàn bộ 540 xe, hình chữ nhật dùng 4 đỉnh; bao lồi thường dùng trung bình 17,8 đỉnh; bao trực giao dùng 96,2 đỉnh.
+Bao trực giao có IoU cao hơn nhưng cần nhiều đỉnh hơn để mô tả các đoạn bậc thang.
 
 Hình~\ref{fig:real_vehicle} minh hoạ trên nhãn của một xe máy. Nhãn này không bao trọn người lái, nên hình chỉ phản ánh độ khớp về hình học với nhãn đã cho.
 
