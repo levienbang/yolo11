@@ -303,7 +303,7 @@ Với vùng dự đoán $A$ và vùng nhãn chuẩn $B$, tính trên điểm ả
 IoU bằng 1 khi hai vùng trùng khít, bằng 0 khi không chồng lên nhau. Ví dụ, phần chung 80 điểm ảnh và phần phủ 100 điểm ảnh cho IoU bằng 0,8.
 
 \paragraph{Đúng, sai và bỏ sót.} Mỗi dự đoán của mô hình có một \emph{độ tin cậy}, cho biết mô hình chắc chắn đến đâu; dự đoán dưới ngưỡng đã chọn bị bỏ qua.
-Một dự đoán được tính là đúng nếu cùng lớp với một nhãn và có IoU với nhãn đó từ 0,5 trở lên; mỗi nhãn chỉ được ghép với một dự đoán, ưu tiên dự đoán có độ tin cậy cao hơn. Trong đánh giá phát hiện đối tượng, báo cáo sử dụng ba loại kết quả TP, FP và FN:
+Khi tính Precision, Recall và F1 trong báo cáo, một dự đoán được tính là đúng nếu cùng lớp với một nhãn và có IoU với nhãn đó từ 0,5 trở lên; mỗi nhãn chỉ được ghép với một dự đoán, ưu tiên dự đoán có độ tin cậy cao hơn. Trong đánh giá phát hiện đối tượng, báo cáo sử dụng ba loại kết quả TP, FP và FN:
 \begin{itemize}
   \item \textbf{TP} (true positive): dự đoán đúng;
   \item \textbf{FP} (false positive): dự đoán sai, tức báo có xe nhưng không ghép được với nhãn nào;
@@ -318,11 +318,49 @@ Hai chỉ số này thường đánh đổi nhau: báo nhiều hơn thì ít b�
   F_1 = \frac{2\cdot\mathrm{Precision}\cdot\mathrm{Recall}}{\mathrm{Precision}+\mathrm{Recall}}.
 \end{equation}
 
-\paragraph{AP, mAP50 và mAP50--95.} Precision, Recall và F1 phụ thuộc vào một ngưỡng độ tin cậy cố định. \emph{AP} (Average Precision) đánh giá mô hình trên mọi ngưỡng:
-nó là diện tích dưới đường cong Precision--Recall của một lớp xe~\cite{everingham2010voc,padilla2021metrics}, nên cao khi mô hình tìm được nhiều xe mà vẫn ít báo sai.
-\emph{mAP} (mean AP) là trung bình AP của các lớp xe.
-\begin{itemize}
-  \item \textbf{mAP50} dùng ngưỡng IoU 0,5: vùng dự đoán chỉ cần khớp vừa phải với nhãn là được tính đúng.
-  \item \textbf{mAP50--95} lấy trung bình trên 10 ngưỡng IoU từ 0,50 đến 0,95: ngưỡng càng cao thì vùng càng phải khớp sát, nên chỉ số này khắt khe hơn và phản ánh rõ độ sát của vùng.
-\end{itemize}
-Đồ án lấy giá trị Precision tại 101 mức Recall cách đều để tính AP theo kiểu COCO~\cite{padilla2021metrics} bằng bộ tính tự viết, không phải công cụ COCOeval chính thức, nên số liệu chỉ dùng để so sánh nội bộ.
+\paragraph{Hai ngưỡng có vai trò khác nhau.}
+Ngưỡng \emph{độ tin cậy} (confidence) quyết định giữ lại dự đoán nào; ngưỡng \emph{IoU} quyết định một dự đoán khớp nhãn đến mức nào thì được tính là đúng.
+Precision, Recall và F1 ở trên được tính tại một ngưỡng confidence cố định. AP tổng hợp kết quả khi thay đổi ngưỡng confidence, còn ngưỡng IoU được giữ cố định trong mỗi lần tính AP.
+
+\paragraph{AP: đánh giá một lớp xe tại một ngưỡng IoU.}
+Gọi $\mathrm{AP}_c(t)$ là AP của lớp $c$ khi dùng ngưỡng IoU $t$, chẳng hạn lớp \texttt{car} tại $t=0{,}50$.
+Các dự đoán của lớp đó được xếp theo confidence từ cao xuống thấp. Lần lượt giữ thêm từng dự đoán và tính lại Precision, Recall từ số TP, FP và FN tương ứng, ta thu được các điểm trên đường cong Precision--Recall~\cite{everingham2010voc,padilla2021metrics}.
+Dự đoán được tính TP khi ghép đúng lớp, có IoU $\ge t$ và nhãn đó chưa được ghép với dự đoán trước.
+
+Để tính AP, tại mỗi mức Recall $r$, lấy Precision cao nhất trong các kết quả có Recall từ $r$ trở lên:
+\begin{equation}
+  P^*_{c,t}(r)=\max_{j:\,R_j\ge r} P_j,
+  \label{eq:ap_precision}
+\end{equation}
+trong đó $(R_j,P_j)$ là cặp Recall và Precision khi giữ $j$ dự đoán đầu tiên của lớp $c$, với ngưỡng IoU $t$.
+Nếu không có kết quả nào đạt Recall $r$, đặt $P^*_{c,t}(r)=0$.
+Đây là bước \emph{nội suy Precision}. Ví dụ, nếu từ Recall 50\% trở lên có các giá trị Precision 70\%, 80\% và 60\%, thì $P^*_{c,t}(0{,}50)=80\%$.
+
+Theo cách tính COCO, AP là trung bình của Precision nội suy tại 101 mốc Recall: $0;\ 0{,}01;\ \ldots;\ 1$~\cite{padilla2021metrics}:
+\begin{equation}
+  \mathrm{AP}_c(t)=\frac{1}{101}\sum_{k=0}^{100}
+  P^*_{c,t}\!\left(\frac{k}{100}\right).
+  \label{eq:ap_101}
+\end{equation}
+AP biểu diễn diện tích dưới đường cong Precision--Recall; AP cao khi mô hình tìm được nhiều xe của lớp đó mà vẫn ít báo sai.
+Báo cáo tính AP bằng công thức~\eqref{eq:ap_101} trên các dự đoán có confidence từ 0,001 trở lên.
+
+\paragraph{mAP: lấy trung bình AP của các lớp.}
+Với $C$ lớp được đánh giá, giữ nguyên ngưỡng IoU $t$ rồi lấy trung bình AP của các lớp:
+\begin{equation}
+  \mathrm{mAP}(t)=\frac{1}{C}\sum_{c=1}^{C}\mathrm{AP}_c(t).
+  \label{eq:map_classes}
+\end{equation}
+Trong đánh giá toàn bộ dữ liệu của đồ án, $C=4$, tương ứng với \texttt{car}, \texttt{truck}, \texttt{bus} và \texttt{motorcycle}.
+Hai chỉ số được báo cáo là:
+\begin{align}
+  \mathrm{mAP50} &= \mathrm{mAP}(0{,}50),
+  \label{eq:map50}\\
+  \mathrm{mAP50\text{--}95} &= \frac{1}{10}\sum_{j=0}^{9}
+  \mathrm{mAP}(0{,}50+0{,}05j).
+  \label{eq:map5095}
+\end{align}
+Ví dụ, nếu AP tại IoU 0,50 của bốn lớp lần lượt là 0,80; 0,70; 0,90 và 0,60 thì mAP50 bằng $(0{,}80+0{,}70+0{,}90+0{,}60)/4=0{,}75$.
+Để tính mAP50--95, lặp lại cách tính đó tại 10 ngưỡng IoU $0{,}50;\ 0{,}55;\ \ldots;\ 0{,}95$, rồi lấy trung bình 10 kết quả.
+Các số 50 và 95 trong tên chỉ số nói về ngưỡng IoU, không phải ngưỡng confidence.
+mAP50--95 khắt khe hơn mAP50 vì các ngưỡng IoU cao yêu cầu vùng dự đoán khớp sát nhãn hơn.
